@@ -1,0 +1,52 @@
+@import './resets';
+@import './variables';
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
+  letter-spacing: 1.2px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header,
+footer {
+  @include flexCenter;
+  padding: 10px;
+  background-color: darken($primary-color, 5%);
+  color: $text-color;
+}
+
+header {
+  font-size: 24px;
+}
+
+main {
+  @include flexCenter;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex: 1;
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(60, 1fr);
+
+    .grid-square {
+      background-color: $grid-color;
+      outline: 1px solid $grid-outline-color;
+      height: 30px;
+      width: 30px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import displayGrid from "./ui";
-import './index.scss'
+import './scss/main.scss';
+import load from './gridhandler';
 
-displayGrid(20, 40);
+load();
