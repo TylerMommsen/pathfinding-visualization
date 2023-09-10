@@ -1,4 +1,4 @@
 import './scss/main.scss';
-import load from './gridhandler';
+import Grid from './grid';
 
-load();
+new Grid(25, 60);

@@ -4,6 +4,7 @@ export default class Node {
     this.col = col;
     this.visited = false;
     this.start = false;
-    this.finish = false;
+    this.end = false;
+    this.barrier = false;
   }
 }

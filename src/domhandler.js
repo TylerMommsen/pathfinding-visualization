@@ -1,13 +1,24 @@
-function handleClick(square) {}
+function updateSquare(grid, row, col, start, end, gridSquare) {
+  const startNode = start.node;
+  const endNode = end.node;
+  if (!grid[row][col].start && !grid[row][col].end && !grid[row][col].barrier) {
+    if (startNode === null) {
+      gridSquare.classList.add('start');
+    } else if (endNode === null) {
+      gridSquare.classList.add('end');
+    } else {
+      gridSquare.classList.add('barrier');
+    }
+  }
+}
 
-function displayGrid(rows, cols) {
+function displayGrid(grid) {
   const gridContainer = document.querySelector('.grid-container');
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
       const gridSquare = document.createElement('div');
       gridSquare.classList.add('grid-square');
       gridSquare.classList.add('empty');
-      gridSquare.addEventListener('click', handleClick(gridSquare));
       gridContainer.appendChild(gridSquare);
     }
   }
@@ -15,6 +26,7 @@ function displayGrid(rows, cols) {
 
 const DomHandler = {
   displayGrid,
+  updateSquare,
 };
 
 export default DomHandler;

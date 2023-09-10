@@ -48,5 +48,17 @@ main {
       height: 30px;
       width: 30px;
     }
+
+    .start {
+      background-color: green;
+    }
+
+    .end {
+      background-color: red;
+    }
+
+    .barrier {
+      background-color: black;
+    }
   }
 }
