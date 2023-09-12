@@ -8,6 +8,9 @@ export default class Grid {
     this.start = { node: null };
     this.end = { node: null };
     this.grid = [];
+    this.openList = [];
+    this.closedList = [];
+    this.finalPath = [];
     this.createGrid(this.rows, this.cols);
 
     this.isDragging = false;
@@ -58,17 +61,18 @@ export default class Grid {
 
   addListeners() {
     const gridContainer = document.querySelector('.grid-container');
+    const gridContainerChildren = gridContainer.children;
 
     for (let row = 0; row < this.grid.length; row++) {
       for (let col = 0; col < this.grid[row].length; col++) {
-        const gridSquare = gridContainer.childNodes[row + 1 * col + 1];
+        const gridSquare = gridContainerChildren[row * 60 + col];
+
         gridSquare.addEventListener('mousedown', () => {
           this.handleMouseDown(gridSquare, row, col);
         });
         gridSquare.addEventListener('mousemove', () => {
           this.handleMouseMove(gridSquare, row, col);
         });
-        gridContainer.appendChild(gridSquare);
       }
     }
     document.addEventListener('mouseup', () => {
@@ -77,11 +81,12 @@ export default class Grid {
   }
 
   createGrid(rows, cols) {
-    for (let row = 0; row < rows; row++) {
-      this.grid[row] = [];
-      for (let col = 0; col < cols; col++) {
-        this.grid[row].push(new Node(row, col));
+    for (let row = 1; row <= rows; row++) {
+      const currentRow = [];
+      for (let col = 1; col <= cols; col++) {
+        currentRow.push(new Node(row, col, this.grid));
       }
+      this.grid.push(currentRow);
     }
     DomHandler.displayGrid(this.grid);
     this.addListeners();

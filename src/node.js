@@ -1,10 +1,55 @@
 export default class Node {
   constructor(row, col) {
+    this.nodeWidth = 30; // px width and height of square
+    this.totalRows = 25;
+    this.totalCols = 60;
     this.row = row;
     this.col = col;
+    this.y = this.row * this.nodeWidth;
+    this.x = this.col * this.nodeWidth;
     this.visited = false;
     this.start = false;
     this.end = false;
     this.barrier = false;
+    this.neighbors = [];
+    this.previousNode = null;
+
+    // astar
+    this.f = 0;
+    this.g = 0;
+    this.h = 0;
+  }
+
+  // calc f, g and h scores
+  calcScores(startNode, endNode) {
+    this.g = Math.abs(this.x - startNode.x) + Math.abs(this.y - startNode.y);
+    this.h = Math.abs(this.x - endNode.x) + Math.abs(this.y - endNode.y);
+    this.f = this.g + this.h;
+    return this.f;
+  }
+
+  setNeighbors(grid) {
+    const tempRow = this.row - 1;
+    const tempCol = this.col - 1;
+
+    if (tempRow < this.totalRows - 1) {
+      // down
+      this.neighbors.push(grid[tempRow + 1][tempCol]);
+    }
+
+    if (tempRow > 0) {
+      // up
+      this.neighbors.push(grid[tempRow - 1][tempCol]);
+    }
+
+    if (tempCol < this.totalCols) {
+      // right
+      this.neighbors.push(grid[tempRow][tempCol + 1]);
+    }
+
+    if (tempCol > 0) {
+      // left
+      this.neighbors.push(grid[tempRow][tempCol - 1]);
+    }
   }
 }
