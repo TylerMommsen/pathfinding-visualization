@@ -1,7 +1,12 @@
 function updateSquare(grid, row, col, start, end, gridSquare) {
   const startNode = start.node;
   const endNode = end.node;
-  if (!grid[row][col].start && !grid[row][col].end && !grid[row][col].barrier) {
+  const gridNode = grid[row][col];
+  if (
+    gridNode.nodeType !== 'start' &&
+    gridNode.nodeType !== 'end' &&
+    gridNode.nodeType !== 'barrier'
+  ) {
     if (startNode === null) {
       gridSquare.classList.add('start');
     } else if (endNode === null) {
@@ -10,6 +15,11 @@ function updateSquare(grid, row, col, start, end, gridSquare) {
       gridSquare.classList.add('barrier');
     }
   }
+}
+
+function displayAlgorithm(node, grid) {
+  const domSquare = grid.findDomSquare(node.row - 1, node.col - 1);
+  domSquare.classList.add(node.nodeType);
 }
 
 function displayGrid(grid) {
@@ -27,6 +37,7 @@ function displayGrid(grid) {
 const DomHandler = {
   displayGrid,
   updateSquare,
+  displayAlgorithm,
 };
 
 export default DomHandler;
