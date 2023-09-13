@@ -37,6 +37,33 @@ header {
   }
 }
 
+footer {
+  gap: 10px;
+  .github-icon {
+    height: 20px;
+    width: 20px;
+
+    &:hover {
+      animation: github-icon 0.6s ease;
+    }
+
+    @keyframes github-icon {
+      0%,
+      100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+      20%,
+      60% {
+        transform: translate(-3px, -3px) rotate(-10deg) scale(1.05);
+      }
+      40%,
+      80% {
+        transform: translate(3px, -3px) rotate(10deg) scale(1.05);
+      }
+    }
+  }
+}
+
 nav {
   @include flexCenter;
   gap: 20px;
