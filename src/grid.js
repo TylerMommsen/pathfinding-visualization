@@ -18,13 +18,13 @@ export default class Grid {
 
   setSquareStatus(row, col) {
     if (this.start.node === null) {
-      this.grid[row][col].start = true;
+      this.grid[row][col].nodeType = 'start';
       this.start.node = this.grid[row][col];
     } else if (this.end.node === null) {
-      this.grid[row][col].end = true;
+      this.grid[row][col].nodeType = 'end';
       this.end.node = this.grid[row][col];
     } else {
-      this.grid[row][col].barrier = true;
+      this.grid[row][col].nodeType = 'barrier';
     }
   }
 
@@ -59,14 +59,17 @@ export default class Grid {
     this.isDragging = false;
   }
 
-  addListeners() {
+  findDomSquare(row, col) {
     const gridContainer = document.querySelector('.grid-container');
     const gridContainerChildren = gridContainer.children;
+    const index = row * 60 + col;
+    return gridContainerChildren[index];
+  }
 
+  addListeners() {
     for (let row = 0; row < this.grid.length; row++) {
       for (let col = 0; col < this.grid[row].length; col++) {
-        const gridSquare = gridContainerChildren[row * 60 + col];
-
+        const gridSquare = this.findDomSquare(row, col);
         gridSquare.addEventListener('mousedown', () => {
           this.handleMouseDown(gridSquare, row, col);
         });
@@ -75,6 +78,7 @@ export default class Grid {
         });
       }
     }
+
     document.addEventListener('mouseup', () => {
       this.handleMouseUp();
     });
@@ -84,7 +88,7 @@ export default class Grid {
     for (let row = 1; row <= rows; row++) {
       const currentRow = [];
       for (let col = 1; col <= cols; col++) {
-        currentRow.push(new Node(row, col, this.grid));
+        currentRow.push(new Node(row, col, this));
       }
       this.grid.push(currentRow);
     }

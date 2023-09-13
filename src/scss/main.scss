@@ -68,22 +68,34 @@ main {
     grid-template-columns: repeat(60, 1fr);
 
     .grid-square {
-      background-color: $grid-color;
+      background-color: $empty-color;
       outline: 1px solid $grid-outline-color;
       height: 30px;
       width: 30px;
     }
 
     .start {
-      background-color: green;
+      background-color: $start-node-color;
     }
 
     .end {
-      background-color: red;
+      background-color: $end-node-color;
     }
 
     .barrier {
-      background-color: black;
+      background-color: $barrier-color;
+    }
+
+    .open-list {
+      background-color: $open-list-color;
+    }
+
+    .closed-list {
+      background-color: $closed-list-color;
+    }
+
+    .final-path {
+      background-color: $final-path-color;
     }
   }
 }

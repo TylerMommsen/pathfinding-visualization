@@ -1,5 +1,7 @@
+import DomHandler from './domhandler';
+
 export default class Node {
-  constructor(row, col) {
+  constructor(row, col, grid) {
     this.nodeWidth = 30; // px width and height of square
     this.totalRows = 25;
     this.totalCols = 60;
@@ -7,17 +9,20 @@ export default class Node {
     this.col = col;
     this.y = this.row * this.nodeWidth;
     this.x = this.col * this.nodeWidth;
-    this.visited = false;
-    this.start = false;
-    this.end = false;
-    this.barrier = false;
+    this.nodeType = 'none'; // used to update square display on dom e.g start, end or barrier
     this.neighbors = [];
     this.previousNode = null;
+    this.grid = grid;
 
     // astar
     this.f = 0;
     this.g = 0;
     this.h = 0;
+  }
+
+  setNodeType(newNodeType) {
+    this.nodeType = newNodeType;
+    DomHandler.displayAlgorithm(this, this.grid);
   }
 
   // calc f, g and h scores
@@ -32,16 +37,6 @@ export default class Node {
     const tempRow = this.row - 1;
     const tempCol = this.col - 1;
 
-    if (tempRow < this.totalRows - 1) {
-      // down
-      this.neighbors.push(grid[tempRow + 1][tempCol]);
-    }
-
-    if (tempRow > 0) {
-      // up
-      this.neighbors.push(grid[tempRow - 1][tempCol]);
-    }
-
     if (tempCol < this.totalCols) {
       // right
       this.neighbors.push(grid[tempRow][tempCol + 1]);
@@ -50,6 +45,16 @@ export default class Node {
     if (tempCol > 0) {
       // left
       this.neighbors.push(grid[tempRow][tempCol - 1]);
+    }
+
+    if (tempRow < this.totalRows - 1) {
+      // down
+      this.neighbors.push(grid[tempRow + 1][tempCol]);
+    }
+
+    if (tempRow > 0) {
+      // up
+      this.neighbors.push(grid[tempRow - 1][tempCol]);
     }
   }
 }
