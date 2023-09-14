@@ -19,20 +19,38 @@
     </header>
 
     <nav>
-      <div class="adjust-algorithm-container">
-        <button class="btn algorithm-btn">Algorithm</button>
+      <div class="dropdown">
+        <button class="btn dropdown-btn">Algorithm</button>
+        <div class="dropdown-list">
+          <button class="list-selection">A*</button>
+          <button class="list-selection">Dijkstra</button>
+          <button class="list-selection">Breadth First Search</button>
+          <button class="list-selection">Depth First Search</button>
+          <button class="list-selection">Jump Point Search</button>
+          <button class="list-selection">Hierarchical</button>
+        </div>
       </div>
-      <div class="adjust-maze-container">
-        <button class="btn mazes-btn">Maze</button>
+      <div class="dropdown">
+        <button class="btn dropdown-btn">Maze</button>
+        <div class="dropdown-list">
+          <button class="list-selection">Random Map</button>
+          <button class="list-selection">Recursive Division</button>
+          <button class="list-selection">Recursive Backtracking</button>
+          <button class="list-selection">Eller's</button>
+          <button class="list-selection">Sidewinder</button>
+          <button class="list-selection">Hunt And Kill</button>
+          <button class="list-selection">Aldous Broder</button>
+        </div>
       </div>
-      <div class="adjust-grid-size-container">
+      <div>
         <button class="btn adjust-grid-size-btn">Change Grid Size</button>
       </div>
-      <button class="btn start-algorithm">Start</button>
-      <div class="adjust-colors-container">
+      <button class="start-algorithm">Start</button>
+      <button class="generate-maze">Generate Maze</button>
+      <div>
         <button class="btn adjust-speed-btn">Change Color</button>
       </div>
-      <div class="adjust-speed-container">
+      <div>
         <button class="btn adjust-speed-btn">Speed</button>
       </div>
       <button class="btn clear-board">Clear Board</button>
