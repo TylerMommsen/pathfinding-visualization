@@ -5,6 +5,8 @@ let grid = null;
 let gridObj = null;
 const ROWS = 25;
 const COLS = 60;
+const selectedAlgorithm = null;
+const selectedMaze = null;
 
 function loadGrid() {
   gridObj = new Grid(ROWS, COLS);
@@ -27,6 +29,56 @@ startButton.addEventListener('click', () => {
   }
 });
 
+function addListenersToBtns() {
+  const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+  const dropdownLists = document.querySelectorAll('.dropdown-list');
+
+  function closeDropdowns() {
+    dropdownLists.forEach((list) => {
+      list.classList.remove('show');
+    });
+  }
+
+  dropdownButtons.forEach((button, index) => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const currentList = dropdownLists[index];
+      const isListOpen = currentList.classList.contains('show');
+
+      closeDropdowns();
+
+      if (!isListOpen) {
+        currentList.classList.toggle('show');
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    const isClickInsideDropdown = Array.from(dropdownLists).some((list) =>
+      list.contains(e.target),
+    );
+
+    if (!isClickInsideDropdown) {
+      closeDropdowns();
+    }
+  });
+
+  dropdownLists.forEach((list, index) => {
+    const listItems = list.querySelectorAll('.list-selection');
+
+    listItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        dropdownLists[index].classList.remove('show');
+        dropdownButtons[index].textContent = item.textContent;
+        e.stopPropagation();
+      });
+    });
+  });
+}
+
 export default function load() {
   loadGrid();
+  document.addEventListener('DOMContentLoaded', () => {
+    addListenersToBtns();
+  });
 }

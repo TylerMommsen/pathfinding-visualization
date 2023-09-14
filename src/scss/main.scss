@@ -24,13 +24,14 @@ footer {
   padding: 10px;
   background-color: darken($primary-color, 5%);
   color: $text-color;
-  font-family: 'Montserrat', sans-serif;
 }
 
 header {
   font-size: 24px;
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.3rem;
+  box-shadow: 0px 4px 8px 2px rgba($color: #000000, $alpha: 0.2);
+  z-index: 2;
 
   .header-title {
     padding-top: 8px;
@@ -39,6 +40,7 @@ header {
 
 footer {
   gap: 10px;
+  font-family: 'Montserrat', sans-serif;
   .github-icon {
     height: 20px;
     width: 20px;
@@ -70,15 +72,68 @@ nav {
   background-color: rgb(90, 90, 90);
   width: 100%;
   padding: 20px;
+  box-shadow: 2px 6px 8px 2px rgba($color: #000000, $alpha: 0.2);
+
+  z-index: 1;
 
   .btn {
     @include button-styles($button-color);
-    font-size: 20px;
+    transition: 0.3s ease;
+
+    &:hover {
+      background-color: $button-hover-color;
+    }
+
+    &:active {
+      background-color: $button-active-color;
+    }
+
+    &:focus {
+      background-color: $button-focus-color;
+    }
   }
 
   .start-algorithm {
-    @include button-styles($start-button);
+    @include button-styles($start-button-color);
   }
+
+  .generate-maze {
+    @include button-styles($generate-maze-button-color);
+  }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-list {
+  background-color: $button-color;
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  height: auto;
+  text-align: center;
+  transition: height 0.4s ease;
+
+  .list-selection {
+    padding: 10px 20px 10px 20px;
+    width: 100%;
+    border: none;
+    transition: 0.2s ease;
+
+    &:hover {
+      background-color: $button-hover-color;
+    }
+
+    &:active {
+      background-color: $button-active-color;
+    }
+  }
+}
+
+.show {
+  display: block;
 }
 
 main {
@@ -93,6 +148,7 @@ main {
   .grid-container {
     display: grid;
     grid-template-columns: repeat(60, 1fr);
+    box-shadow: 0px 0px 16px 4px rgba($color: #ffffff, $alpha: 0.3);
 
     .grid-square {
       background-color: $empty-color;
