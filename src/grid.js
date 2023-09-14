@@ -66,14 +66,16 @@ export default class Grid {
     return gridContainerChildren[index];
   }
 
-  addListeners() {
+  addListeners(currentlyRunning) {
     for (let row = 0; row < this.grid.length; row++) {
       for (let col = 0; col < this.grid[row].length; col++) {
         const gridSquare = this.findDomSquare(row, col);
         gridSquare.addEventListener('mousedown', () => {
+          if (currentlyRunning[0]) return;
           this.handleMouseDown(gridSquare, row, col);
         });
         gridSquare.addEventListener('mousemove', () => {
+          if (currentlyRunning[0]) return;
           this.handleMouseMove(gridSquare, row, col);
         });
       }
@@ -93,6 +95,35 @@ export default class Grid {
       this.grid.push(currentRow);
     }
     DomHandler.displayGrid(this.grid);
-    this.addListeners();
+  }
+
+  setAllNodeNeighbors() {
+    for (let row = 0; row < this.grid.length; row++) {
+      for (let col = 0; col < this.grid[row].length; col++) {
+        this.grid[row][col].setNeighbors(this.grid);
+      }
+    }
+  }
+
+  resetGrid() {
+    // creating new grid
+    this.grid = [];
+    for (let row = 1; row <= this.rows; row++) {
+      const currentRow = [];
+      for (let col = 1; col <= this.cols; col++) {
+        currentRow.push(new Node(row, col, this));
+      }
+      this.grid.push(currentRow);
+    }
+
+    // setting neighbours again
+    this.setAllNodeNeighbors();
+
+    // resetting start and end node
+    this.start.node = null;
+    this.end.node = null;
+
+    // reseting dom squares
+    DomHandler.resetGrid();
   }
 }

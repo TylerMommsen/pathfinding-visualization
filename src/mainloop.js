@@ -1,37 +1,48 @@
 import Grid from './grid';
 import astar from './algorithms/astar';
 
-let grid = null;
 let gridObj = null;
 const ROWS = 25;
 const COLS = 60;
-const selectedAlgorithm = null;
-const selectedMaze = null;
+let selectedAlgorithm = null;
+let selectedMaze = null;
+const running = [false]; // check whether an algorithm is currently running
 
 function loadGrid() {
   gridObj = new Grid(ROWS, COLS);
-  grid = gridObj.grid;
 }
 
 const startButton = document.querySelector('.start-algorithm');
 
-startButton.addEventListener('click', () => {
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      grid[row][col].setNeighbors(grid);
-    }
-  }
+startButton.addEventListener('click', async () => {
+  if (running[0]) return; // algorithm in progress
+  gridObj.setAllNodeNeighbors();
 
   const startNode = gridObj.start.node;
   const endNode = gridObj.end.node;
   if (startNode && endNode) {
-    astar(startNode, endNode);
+    try {
+      running[0] = true;
+      const pathFound = await astar(startNode, endNode);
+
+      if (pathFound) {
+        console.log('found path');
+        running[0] = false;
+      } else {
+        console.log('path not found');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      running[0] = false;
+    }
   }
 });
 
 function addListenersToBtns() {
   const dropdownButtons = document.querySelectorAll('.dropdown-btn');
   const dropdownLists = document.querySelectorAll('.dropdown-list');
+  const clearBoardBtn = document.querySelector('.clear-board');
 
   function closeDropdowns() {
     dropdownLists.forEach((list) => {
@@ -70,14 +81,25 @@ function addListenersToBtns() {
       item.addEventListener('click', (e) => {
         dropdownLists[index].classList.remove('show');
         dropdownButtons[index].textContent = item.textContent;
+        if (index === 0) selectedAlgorithm = item.textContent;
+        if (index === 1) selectedMaze = item.textContent;
         e.stopPropagation();
       });
     });
   });
+
+  clearBoardBtn.addEventListener('click', () => {
+    gridObj.resetGrid();
+  });
+}
+
+function addListenersToGrid() {
+  gridObj.addListeners(running);
 }
 
 export default function load() {
   loadGrid();
+  addListenersToGrid();
   document.addEventListener('DOMContentLoaded', () => {
     addListenersToBtns();
   });

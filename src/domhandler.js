@@ -34,10 +34,22 @@ function displayGrid(grid) {
   }
 }
 
+function resetGrid() {
+  const gridContainer = document.querySelector('.grid-container');
+  const gridContainerChildren = gridContainer.querySelectorAll('.grid-square');
+
+  for (let i = 0; i < gridContainerChildren.length; i++) {
+    gridContainerChildren[i].removeAttribute('class');
+    gridContainerChildren[i].classList.add('grid-square');
+    gridContainerChildren[i].classList.add('empty');
+  }
+}
+
 const DomHandler = {
   displayGrid,
   updateSquare,
   displayAlgorithm,
+  resetGrid,
 };
 
 export default DomHandler;
