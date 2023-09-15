@@ -1,5 +1,6 @@
 import Grid from './grid';
 import astar from './algorithms/astar';
+import dijkstra from './algorithms/dijkstra';
 
 let gridObj = null;
 const ROWS = 25;
@@ -12,30 +13,57 @@ function loadGrid() {
   gridObj = new Grid(ROWS, COLS);
 }
 
+async function runAStar() {
+  const startNode = gridObj.start.node;
+  const endNode = gridObj.end.node;
+
+  try {
+    running[0] = true;
+    const pathFound = await astar(startNode, endNode);
+
+    if (pathFound) {
+      console.log('found path');
+      running[0] = false;
+    } else {
+      console.log('path not found');
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    running[0] = false;
+  }
+}
+
+async function runDijkstra() {
+  const startNode = gridObj.start.node;
+  const endNode = gridObj.end.node;
+
+  try {
+    running[0] = true;
+    const pathFound = await dijkstra(gridObj.grid, startNode, endNode);
+
+    if (pathFound) {
+      console.log('found path');
+      running[0] = false;
+    } else {
+      console.log('path not found');
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    running[0] = false;
+  }
+}
+
 const startButton = document.querySelector('.start-algorithm');
 
 startButton.addEventListener('click', async () => {
   if (running[0]) return; // algorithm in progress
   gridObj.setAllNodeNeighbors();
 
-  const startNode = gridObj.start.node;
-  const endNode = gridObj.end.node;
-  if (startNode && endNode) {
-    try {
-      running[0] = true;
-      const pathFound = await astar(startNode, endNode);
-
-      if (pathFound) {
-        console.log('found path');
-        running[0] = false;
-      } else {
-        console.log('path not found');
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      running[0] = false;
-    }
+  if (gridObj.start.node && gridObj.end.node) {
+    if (selectedAlgorithm === 'A*') runAStar();
+    if (selectedAlgorithm === 'Dijkstra') runDijkstra();
   }
 });
 
@@ -65,9 +93,7 @@ function addListenersToBtns() {
   });
 
   document.addEventListener('click', (e) => {
-    const isClickInsideDropdown = Array.from(dropdownLists).some((list) =>
-      list.contains(e.target),
-    );
+    const isClickInsideDropdown = Array.from(dropdownLists).some((list) => list.contains(e.target));
 
     if (!isClickInsideDropdown) {
       closeDropdowns();

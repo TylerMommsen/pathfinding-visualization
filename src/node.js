@@ -37,7 +37,7 @@ export default class Node {
     const tempRow = this.row - 1;
     const tempCol = this.col - 1;
 
-    if (tempCol < this.totalCols) {
+    if (tempCol < this.totalCols - 1) {
       // right
       this.neighbors.push(grid[tempRow][tempCol + 1]);
     }

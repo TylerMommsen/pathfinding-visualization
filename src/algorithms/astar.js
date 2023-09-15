@@ -1,5 +1,5 @@
 export default function astar(startNode, endNode) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const openList = [];
     const closedList = [];
     const finalPath = [];
@@ -36,22 +36,17 @@ export default function astar(startNode, endNode) {
           temp = temp.previousNode;
         }
         resolve(true);
-        return true;
+        return;
       }
 
       closedList.push(currentNode);
       currentNode.setNodeType('closed-list');
       removeFromArr(currentNode);
 
-      const neighbors = currentNode.neighbors;
+      for (let i = 0; i < currentNode.neighbors.length; i++) {
+        const currNeighbor = currentNode.neighbors[i];
 
-      for (let i = 0; i < neighbors.length; i++) {
-        const currNeighbor = neighbors[i];
-
-        if (
-          currNeighbor.nodeType !== 'barrier' &&
-          !closedList.includes(currNeighbor)
-        ) {
+        if (currNeighbor.nodeType !== 'barrier' && !closedList.includes(currNeighbor)) {
           const tempG = currentNode.g + 1;
           if (openList.includes(currNeighbor)) {
             if (tempG < currNeighbor.g) {
