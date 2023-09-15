@@ -1,6 +1,7 @@
 import Grid from './grid';
 import astar from './algorithms/astar';
 import dijkstra from './algorithms/dijkstra';
+import randomMap from './mazes/randommap';
 
 let gridObj = null;
 const ROWS = 25;
@@ -55,9 +56,14 @@ async function runDijkstra() {
   }
 }
 
-const startButton = document.querySelector('.start-algorithm');
+function generateRandomMap() {
+  randomMap(gridObj.grid);
+  console.log('clled');
+}
 
-startButton.addEventListener('click', async () => {
+const startBtn = document.querySelector('.start-algorithm');
+
+startBtn.addEventListener('click', async () => {
   if (running[0]) return; // algorithm in progress
   gridObj.setAllNodeNeighbors();
 
@@ -65,6 +71,16 @@ startButton.addEventListener('click', async () => {
     if (selectedAlgorithm === 'A*') runAStar();
     if (selectedAlgorithm === 'Dijkstra') runDijkstra();
   }
+});
+
+const generateMazeBtn = document.querySelector('.generate-maze');
+
+generateMazeBtn.addEventListener('click', () => {
+  if (running[0]) return; // algorithm in progress
+  gridObj.resetGrid();
+  console.log('working');
+
+  if (selectedMaze === 'Random Map') generateRandomMap();
 });
 
 function addListenersToBtns() {
@@ -79,6 +95,7 @@ function addListenersToBtns() {
   }
 
   dropdownButtons.forEach((button, index) => {
+    if (running[0]) return; // algorithm in progress
     button.addEventListener('click', (e) => {
       e.stopPropagation();
       const currentList = dropdownLists[index];
@@ -115,6 +132,7 @@ function addListenersToBtns() {
   });
 
   clearBoardBtn.addEventListener('click', () => {
+    if (running[0]) return; // algorithm in progress
     gridObj.resetGrid();
   });
 }
