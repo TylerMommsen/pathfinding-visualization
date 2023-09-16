@@ -3,6 +3,7 @@ import astar from './algorithms/astar';
 import dijkstra from './algorithms/dijkstra';
 import randomMap from './mazes/randommap';
 import binaryTree from './mazes/binarytree';
+import generateSidewinder from './mazes/sidewinder';
 
 let gridObj = null;
 const ROWS = 25;
@@ -86,6 +87,7 @@ generateMazeBtn.addEventListener('click', () => {
 
   if (selectedMaze === 'Random Map') generateRandomMap();
   if (selectedMaze === 'Binary Tree') generateBinaryTree();
+  if (selectedMaze === 'Sidewinder') generateSidewinder(gridObj.grid);
 });
 
 function addListenersToBtns() {

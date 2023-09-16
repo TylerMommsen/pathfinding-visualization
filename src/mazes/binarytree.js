@@ -13,7 +13,6 @@ export default async function binaryTree(grid) {
     }
   }
 
-  console.log(grid.length, grid[0].length);
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
       if (row % 2 === 0 || col % 2 === 0) continue;
