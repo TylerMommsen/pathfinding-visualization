@@ -19,6 +19,8 @@ function updateSquare(grid, row, col, start, end, gridSquare) {
 
 function displayAlgorithm(node, grid) {
   const domSquare = grid.findDomSquare(node.row - 1, node.col - 1);
+  domSquare.removeAttribute('class');
+  domSquare.classList.add('grid-square');
   domSquare.classList.add(node.nodeType);
 }
 

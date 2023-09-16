@@ -2,10 +2,11 @@ import Grid from './grid';
 import astar from './algorithms/astar';
 import dijkstra from './algorithms/dijkstra';
 import randomMap from './mazes/randommap';
+import binaryTree from './mazes/binarytree';
 
 let gridObj = null;
 const ROWS = 25;
-const COLS = 60;
+const COLS = 61;
 let selectedAlgorithm = null;
 let selectedMaze = null;
 const running = [false]; // check whether an algorithm is currently running
@@ -61,6 +62,10 @@ function generateRandomMap() {
   console.log('clled');
 }
 
+function generateBinaryTree() {
+  binaryTree(gridObj.grid);
+}
+
 const startBtn = document.querySelector('.start-algorithm');
 
 startBtn.addEventListener('click', async () => {
@@ -78,9 +83,9 @@ const generateMazeBtn = document.querySelector('.generate-maze');
 generateMazeBtn.addEventListener('click', () => {
   if (running[0]) return; // algorithm in progress
   gridObj.resetGrid();
-  console.log('working');
 
   if (selectedMaze === 'Random Map') generateRandomMap();
+  if (selectedMaze === 'Binary Tree') generateBinaryTree();
 });
 
 function addListenersToBtns() {

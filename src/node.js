@@ -9,12 +9,12 @@ export default class Node {
     this.col = col;
     this.y = this.row * this.nodeWidth;
     this.x = this.col * this.nodeWidth;
-    this.nodeType = 'none'; // used to update square display on dom e.g start, end or barrier
+    this.nodeType = 'empty'; // used to update square display on dom e.g start, end or barrier
     this.neighbors = [];
     this.previousNode = null;
     this.grid = grid;
 
-    // astar
+    // astar scores
     this.f = 0;
     this.g = 0;
     this.h = 0;
@@ -37,7 +37,7 @@ export default class Node {
     const tempRow = this.row - 1;
     const tempCol = this.col - 1;
 
-    if (tempCol < this.totalCols - 1) {
+    if (tempCol < this.totalCols) {
       // right
       this.neighbors.push(grid[tempRow][tempCol + 1]);
     }

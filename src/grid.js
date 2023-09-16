@@ -30,27 +30,13 @@ export default class Grid {
 
   handleMouseDown(gridSquare, row, col) {
     this.isDragging = true;
-    DomHandler.updateSquare(
-      this.grid,
-      row,
-      col,
-      this.start,
-      this.end,
-      gridSquare,
-    );
+    DomHandler.updateSquare(this.grid, row, col, this.start, this.end, gridSquare);
     this.setSquareStatus(row, col);
   }
 
   handleMouseMove(gridSquare, row, col) {
     if (this.isDragging) {
-      DomHandler.updateSquare(
-        this.grid,
-        row,
-        col,
-        this.start,
-        this.end,
-        gridSquare,
-      );
+      DomHandler.updateSquare(this.grid, row, col, this.start, this.end, gridSquare);
       this.setSquareStatus(row, col);
     }
   }
@@ -62,7 +48,7 @@ export default class Grid {
   findDomSquare(row, col) {
     const gridContainer = document.querySelector('.grid-container');
     const gridContainerChildren = gridContainer.children;
-    const index = row * 60 + col;
+    const index = row * this.cols + col;
     return gridContainerChildren[index];
   }
 
