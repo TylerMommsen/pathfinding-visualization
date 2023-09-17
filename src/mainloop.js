@@ -3,7 +3,8 @@ import astar from './algorithms/astar';
 import dijkstra from './algorithms/dijkstra';
 import randomMap from './mazes/randommap';
 import binaryTree from './mazes/binarytree';
-import generateSidewinder from './mazes/sidewinder';
+import sidewinder from './mazes/sidewinder';
+import recursiveDivision from './mazes/recursivedivision';
 
 let gridObj = null;
 const ROWS = 25;
@@ -58,15 +59,6 @@ async function runDijkstra() {
   }
 }
 
-function generateRandomMap() {
-  randomMap(gridObj.grid);
-  console.log('clled');
-}
-
-function generateBinaryTree() {
-  binaryTree(gridObj.grid);
-}
-
 const startBtn = document.querySelector('.start-algorithm');
 
 startBtn.addEventListener('click', async () => {
@@ -85,9 +77,10 @@ generateMazeBtn.addEventListener('click', () => {
   if (running[0]) return; // algorithm in progress
   gridObj.resetGrid();
 
-  if (selectedMaze === 'Random Map') generateRandomMap();
-  if (selectedMaze === 'Binary Tree') generateBinaryTree();
-  if (selectedMaze === 'Sidewinder') generateSidewinder(gridObj.grid);
+  if (selectedMaze === 'Random Map') randomMap(gridObj.grid);
+  if (selectedMaze === 'Binary Tree') binaryTree(gridObj.grid);
+  if (selectedMaze === 'Sidewinder') sidewinder(gridObj.grid);
+  if (selectedMaze === 'Recursive Division') recursiveDivision(gridObj.grid);
 });
 
 function addListenersToBtns() {

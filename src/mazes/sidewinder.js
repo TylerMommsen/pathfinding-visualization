@@ -1,4 +1,4 @@
-export default async function generateSidewinder(grid) {
+export default async function sidewinder(grid) {
   const delay = 0.1;
   const rows = grid.length;
   const cols = grid[0].length;
