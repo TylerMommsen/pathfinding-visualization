@@ -40,4 +40,5 @@ export default async function sidewinder(grid) {
       }
     }
   }
+  return true; // maze generation finished
 }

@@ -53,4 +53,5 @@ export default async function binaryTree(grid) {
       }
     }
   }
+  return true; // maze generation finished
 }

@@ -16,28 +16,29 @@ export default class Grid {
     this.isDragging = false;
   }
 
-  setSquareStatus(row, col) {
+  setSquareStatus(gridSquare, row, col) {
+    const currentNode = this.grid[row][col];
+    if (currentNode.nodeType !== 'empty') return;
     if (this.start.node === null) {
-      this.grid[row][col].nodeType = 'start';
-      this.start.node = this.grid[row][col];
+      currentNode.nodeType = 'start';
+      this.start.node = currentNode;
     } else if (this.end.node === null) {
-      this.grid[row][col].nodeType = 'end';
-      this.end.node = this.grid[row][col];
+      currentNode.nodeType = 'end';
+      this.end.node = currentNode;
     } else {
-      this.grid[row][col].nodeType = 'barrier';
+      currentNode.nodeType = 'barrier';
     }
+    DomHandler.updateSquare(gridSquare, currentNode.nodeType);
   }
 
   handleMouseDown(gridSquare, row, col) {
     this.isDragging = true;
-    DomHandler.updateSquare(this.grid, row, col, this.start, this.end, gridSquare);
-    this.setSquareStatus(row, col);
+    this.setSquareStatus(gridSquare, row, col);
   }
 
   handleMouseMove(gridSquare, row, col) {
     if (this.isDragging) {
-      DomHandler.updateSquare(this.grid, row, col, this.start, this.end, gridSquare);
-      this.setSquareStatus(row, col);
+      this.setSquareStatus(gridSquare, row, col);
     }
   }
 

@@ -1,20 +1,5 @@
-function updateSquare(grid, row, col, start, end, gridSquare) {
-  const startNode = start.node;
-  const endNode = end.node;
-  const gridNode = grid[row][col];
-  if (
-    gridNode.nodeType !== 'start' &&
-    gridNode.nodeType !== 'end' &&
-    gridNode.nodeType !== 'barrier'
-  ) {
-    if (startNode === null) {
-      gridSquare.classList.add('start');
-    } else if (endNode === null) {
-      gridSquare.classList.add('end');
-    } else {
-      gridSquare.classList.add('barrier');
-    }
-  }
+function updateSquare(gridSquare, nodeType) {
+  gridSquare.classList.add(nodeType);
 }
 
 function displayAlgorithm(node, grid) {

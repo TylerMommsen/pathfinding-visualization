@@ -1,6 +1,8 @@
-export default function recursiveDivision(grid) {
+export default async function recursiveDivision(grid) {
+  const delay = 10;
   const rows = grid.length;
   const cols = grid[0].length;
+  let isFinished = false; // is recursive process finished?
 
   function randomEven(a, b) {
     const random = Math.floor(Math.random() * (b - a + 1)) + a;
@@ -35,11 +37,13 @@ export default function recursiveDivision(grid) {
   }
 
   // the recursive function to divide the grid
-  function divide(startRow, endRow, startCol, endCol) {
+  async function divide(startRow, endRow, startCol, endCol) {
     if (endCol - startCol < 1 || endRow - startRow < 1) {
       // base case if sub-maze is too small
       return;
     }
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
 
     const wallRow = randomEven(startRow + 1, endRow - 1);
     const wallCol = randomEven(startCol + 1, endCol - 1);
@@ -66,13 +70,20 @@ export default function recursiveDivision(grid) {
     }
 
     if (orientation === 'horizontal') {
-      divide(startRow, wallRow - 1, startCol, endCol);
-      divide(wallRow + 1, endRow, startCol, endCol);
+      await divide(startRow, wallRow - 1, startCol, endCol);
+      await divide(wallRow + 1, endRow, startCol, endCol);
     } else if (orientation === 'vertical') {
-      divide(startRow, endRow, wallCol + 1, endCol);
-      divide(startRow, endRow, startCol, wallCol - 1);
+      await divide(startRow, endRow, wallCol + 1, endCol);
+      await divide(startRow, endRow, startCol, wallCol - 1);
+    }
+
+    // Check if this is the last recursive call
+    if (startRow === 1 && endRow === rows - 2 && startCol === 1 && endCol === cols - 2) {
+      isFinished = true;
     }
   }
 
-  divide(1, rows - 2, 1, cols - 2);
+  await divide(1, rows - 2, 1, cols - 2);
+
+  return isFinished; // maze generation finished
 }

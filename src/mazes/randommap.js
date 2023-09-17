@@ -7,4 +7,5 @@ export default function randomMap(grid) {
       }
     }
   }
+  return true; // maze generation finished
 }

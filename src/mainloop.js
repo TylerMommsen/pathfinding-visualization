@@ -11,7 +11,7 @@ const ROWS = 25;
 const COLS = 61;
 let selectedAlgorithm = null;
 let selectedMaze = null;
-const running = [false]; // check whether an algorithm is currently running
+const running = [false]; // check if algorithm is currently running
 
 function loadGrid() {
   gridObj = new Grid(ROWS, COLS);
@@ -73,14 +73,25 @@ startBtn.addEventListener('click', async () => {
 
 const generateMazeBtn = document.querySelector('.generate-maze');
 
-generateMazeBtn.addEventListener('click', () => {
+generateMazeBtn.addEventListener('click', async () => {
   if (running[0]) return; // algorithm in progress
+  running[0] = true;
   gridObj.resetGrid();
 
-  if (selectedMaze === 'Random Map') randomMap(gridObj.grid);
-  if (selectedMaze === 'Binary Tree') binaryTree(gridObj.grid);
-  if (selectedMaze === 'Sidewinder') sidewinder(gridObj.grid);
-  if (selectedMaze === 'Recursive Division') recursiveDivision(gridObj.grid);
+  let done;
+  if (selectedMaze === 'Random Map') {
+    done = await randomMap(gridObj.grid);
+  }
+  if (selectedMaze === 'Binary Tree') {
+    done = await binaryTree(gridObj.grid);
+  }
+  if (selectedMaze === 'Sidewinder') {
+    done = await sidewinder(gridObj.grid);
+  }
+  if (selectedMaze === 'Recursive Division') {
+    done = await recursiveDivision(gridObj.grid);
+  }
+  if (done) running[0] = false;
 });
 
 function addListenersToBtns() {
