@@ -90,14 +90,6 @@ nav {
       background-color: $button-hover-color;
       color: $button-text-hover-color;
     }
-
-    // &:active {
-    //   background-color: $button-active-color;
-    // }
-
-    // &:focus {
-    //   background-color: $button-focus-color;
-    // }
   }
 
   .start-algorithm {
@@ -159,33 +151,52 @@ main {
 
     .grid-square {
       background-color: $empty-color;
+      background-size: 100% 100%;
       outline: 1px solid $grid-outline-color;
       height: 30px;
       width: 30px;
     }
 
+    @keyframes popIn {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
     .start {
       background-color: $start-node-color;
+      animation: popIn 0.3s;
     }
 
     .end {
       background-color: $end-node-color;
+      animation: popIn 0.3s;
     }
 
     .barrier {
       background-color: $barrier-color;
+      animation: popIn 0.3s;
     }
 
     .open-list {
       background-color: $open-list-color;
+      animation: popIn 0.3s;
     }
 
     .closed-list {
       background-color: $closed-list-color;
+      animation: popIn 0.3s;
     }
 
     .final-path {
       background-color: $final-path-color;
+      animation: popIn 0.3s;
     }
   }
 }
