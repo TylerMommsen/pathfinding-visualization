@@ -5,6 +5,7 @@ import randomMap from './mazes/randommap';
 import binaryTree from './mazes/binarytree';
 import sidewinder from './mazes/sidewinder';
 import recursiveDivision from './mazes/recursivedivision';
+import generatePrims from './mazes/prims';
 
 let gridObj = null;
 const ROWS = 25;
@@ -90,6 +91,9 @@ generateMazeBtn.addEventListener('click', async () => {
   }
   if (selectedMaze === 'Recursive Division') {
     done = await recursiveDivision(gridObj.grid);
+  }
+  if (selectedMaze === "Prim's") {
+    done = await generatePrims(gridObj.grid);
   }
   if (done) running[0] = false;
 });

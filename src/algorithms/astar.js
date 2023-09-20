@@ -4,6 +4,7 @@ export default function astar(startNode, endNode) {
     const closedList = [];
     const finalPath = [];
     let animationFrameId = null;
+    const delay = 15;
 
     function removeFromArr(node) {
       for (let i = 0; i < openList.length; i++) {
@@ -13,9 +14,16 @@ export default function astar(startNode, endNode) {
       }
     }
 
+    async function displayFinalPath(path) {
+      for (let i = path.length - 1; i >= 0; i--) {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        path[i].setNodeType('final-path');
+      }
+    }
+
     openList.push(startNode);
     startNode.setNodeType('open-list');
-    function algorithm() {
+    async function algorithm() {
       let currentNode = null;
       let lowestF = Infinity;
       for (let i = 0; i < openList.length; i++) {
@@ -29,12 +37,11 @@ export default function astar(startNode, endNode) {
       if (currentNode === endNode) {
         let temp = currentNode;
         finalPath.push(temp);
-        temp.setNodeType('final-path');
         while (temp.previousNode) {
           finalPath.push(temp.previousNode);
-          temp.previousNode.setNodeType('final-path');
           temp = temp.previousNode;
         }
+        await displayFinalPath(finalPath);
         resolve(true);
         return;
       }

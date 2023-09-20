@@ -4,7 +4,7 @@ export default class Node {
   constructor(row, col, grid) {
     this.nodeWidth = 30; // px width and height of square
     this.totalRows = 25;
-    this.totalCols = 60;
+    this.totalCols = 61;
     this.row = row;
     this.col = col;
     this.y = this.row * this.nodeWidth;
@@ -37,7 +37,7 @@ export default class Node {
     const tempRow = this.row - 1;
     const tempCol = this.col - 1;
 
-    if (tempCol < this.totalCols) {
+    if (tempCol < this.totalCols - 1) {
       // right
       this.neighbors.push(grid[tempRow][tempCol + 1]);
     }
