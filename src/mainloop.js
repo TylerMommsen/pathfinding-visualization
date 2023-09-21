@@ -138,7 +138,7 @@ function addListenersToBtns() {
     listItems.forEach((item) => {
       item.addEventListener('click', (e) => {
         dropdownLists[index].classList.remove('show');
-        dropdownButtons[index].textContent = item.textContent;
+        dropdownButtons[index].textContent = item.textContent + ' ▼';
         if (index === 0) selectedAlgorithm = item.textContent;
         if (index === 1) selectedMaze = item.textContent;
         e.stopPropagation();

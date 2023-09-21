@@ -9,12 +9,6 @@
   font-weight: bold;
   cursor: pointer;
   font-size: 20px;
-  transition: 0.3s ease;
-
-  &:hover {
-    background-color: darken($color: $bg-color, $amount: 10%);
-  }
-  &:active {
-    background-color: darken($color: $bg-color, $amount: 15%);
-  }
+  letter-spacing: normal;
+  line-height: 1;
 }

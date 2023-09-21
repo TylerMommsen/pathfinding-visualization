@@ -84,7 +84,7 @@ nav {
 
   .btn {
     @include button-styles($button-color, $button-text-color);
-    transition: 0.3s ease;
+    transition: 0.3s ease-in-out;
 
     &:hover {
       background-color: $button-hover-color;
@@ -92,42 +92,77 @@ nav {
     }
   }
 
-  .start-algorithm {
-    @include button-styles($start-button-color, black);
+  .grid-size {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+
+  // .arrows-container {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+
+  //   .arrow {
+  //     color: $button-text-color;
+  //     border: none;
+  //     background-color: transparent;
+
+  //     &:hover {
+  //       color: $button-text-hover-color;
+  //     }
+  //   }
+  // }
 
   .generate-maze {
     @include button-styles($generate-maze-button-color, black);
+  }
+
+  .start-algorithm {
+    @include button-styles($start-button-color, black);
   }
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
+
+  .dropdown-btn-container {
+    display: flex;
+  }
 }
 
 .dropdown-list {
-  background-color: $button-color;
   display: none;
   position: absolute;
   min-width: 160px;
-  height: auto;
+  max-height: 0;
   text-align: center;
-  transition: height 0.4s ease;
+  transition: max-height 0.4s ease-in-out;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 5px;
+  background-color: $button-color;
 
   .list-selection {
+    background-color: $button-color;
+    color: $button-text-color;
+    font-weight: bold;
+    font-size: 16px;
     padding: 10px 20px 10px 20px;
     width: 100%;
     border: none;
     transition: 0.2s ease;
+    border-radius: 10px;
 
     &:hover {
       background-color: $button-hover-color;
+      color: $button-text-hover-color;
     }
+  }
 
-    &:active {
-      background-color: $button-active-color;
-    }
+  &.show {
+    max-height: 300px;
   }
 }
 
