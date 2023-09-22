@@ -16,8 +16,8 @@
     <nav>
       <div class="customizations">
         <div class="dropdown">
-          <button class="btn dropdown-btn">Algorithms ▼</button>
-          <div class="dropdown-list">
+          <button class="btn select-algo-btn dropdown-btn">Select Algorithm</button>
+          <div class="dropdown-list algo-list">
             <button class="list-selection">A*</button>
             <button class="list-selection">Dijkstra</button>
             <button class="list-selection">Jump Point Search</button>
@@ -25,11 +25,8 @@
           </div>
         </div>
         <div class="dropdown">
-          <div class="dropdown-btn-container">
-            <button class="btn dropdown-btn">Mazes ▼</button>
-          </div>
-
-          <div class="dropdown-list">
+          <button class="btn select-maze-btn dropdown-btn">Select Maze</button>
+          <div class="dropdown-list maze-list">
             <button class="list-selection">Recursive Division</button>
             <button class="list-selection">Binary Tree</button>
             <button class="list-selection">Sidewinder</button>
@@ -39,20 +36,37 @@
             <button class="list-selection">Random Map</button>
           </div>
         </div>
-        <div class="btn grid-size">
-          Change Grid Size
-          <!-- <div class="arrows-container">
-            <button class="arrow">▲</button>
-            <button class="arrow">▼</button>
-          </div> -->
+        <div class="dropdown">
+          <button class="btn grid-size-btn dropdown-btn">Grid Size</button>
+          <div class="dropdown-list grid-size-list">
+            <button class="list-selection">Small</button>
+            <button class="list-selection">Medium</button>
+            <button class="list-selection">Large</button>
+          </div>
         </div>
-        <div>
-          <button class="btn adjust-speed-btn">Speed</button>
+        <div class="dropdown">
+          <button class="btn select-maze-speed-btn dropdown-btn">Maze Speed (Normal)</button>
+          <div class="dropdown-list maze-speed-list">
+            <button class="list-selection">Slow</button>
+            <button class="list-selection">Normal</button>
+            <button class="list-selection">Fast</button>
+            <button class="list-selection">Instant</button>
+          </div>
         </div>
-        <button class="btn clear-board">Clear Board</button>
+        <div class="dropdown">
+          <button class="btn select-algo-speed-btn dropdown-btn">Pathfinding Speed (Normal)</button>
+          <div class="dropdown-list algo-speed-list">
+            <button class="list-selection">Slow</button>
+            <button class="list-selection">Normal</button>
+            <button class="list-selection">Fast</button>
+            <button class="list-selection">Instant</button>
+          </div>
+        </div>
       </div>
 
-      <div class="start-and-generate-btns">
+      <div class="manage-board-btns">
+        <button class="btn clear-board">Clear Board</button>
+        <button class="btn clear-path">Clear Path</button>
         <button class="generate-maze">Generate Maze</button>
         <button class="start-algorithm">Start</button>
       </div>

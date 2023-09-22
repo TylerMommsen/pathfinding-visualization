@@ -1,10 +1,10 @@
 import DomHandler from './domhandler';
 
 export default class Node {
-  constructor(row, col, grid) {
+  constructor(row, col, totalRows, totalCols, grid) {
     this.nodeWidth = 30; // px width and height of square
-    this.totalRows = 25;
-    this.totalCols = 61;
+    this.totalRows = totalRows;
+    this.totalCols = totalCols;
     this.row = row;
     this.col = col;
     this.y = this.row * this.nodeWidth;

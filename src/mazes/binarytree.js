@@ -1,6 +1,4 @@
-export default async function binaryTree(grid) {
-  const delay = 0.1;
-
+export default async function binaryTree(grid, delay) {
   function connect(node1, node2, barrierBetween) {
     node1.setNodeType('empty');
     node2.setNodeType('empty');
@@ -16,7 +14,9 @@ export default async function binaryTree(grid) {
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
       if (row % 2 === 0 || col % 2 === 0) continue;
-      await new Promise((resolve) => setTimeout(resolve, delay));
+      if (delay > 0) {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
 
       const currentSquare = grid[row][col];
       let northNeighbor;

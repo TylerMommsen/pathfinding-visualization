@@ -74,9 +74,9 @@ nav {
   z-index: 1;
 
   .customizations,
-  .start-and-generate-btns {
+  .manage-board-btns {
     @include flexCenter;
-    gap: 20px;
+    gap: 10px;
     background-color: rgb(90, 90, 90);
     padding: 20px;
     z-index: 1;
@@ -97,22 +97,6 @@ nav {
     justify-content: space-between;
     align-items: center;
   }
-
-  // .arrows-container {
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-
-  //   .arrow {
-  //     color: $button-text-color;
-  //     border: none;
-  //     background-color: transparent;
-
-  //     &:hover {
-  //       color: $button-text-hover-color;
-  //     }
-  //   }
-  // }
 
   .generate-maze {
     @include button-styles($generate-maze-button-color, black);
@@ -181,15 +165,27 @@ main {
 
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(61, 1fr);
     box-shadow: 0px 0px 16px 4px rgba($color: #ffffff, $alpha: 0.3);
 
     .grid-square {
       background-color: $empty-color;
       background-size: 100% 100%;
       outline: 1px solid $grid-outline-color;
+    }
+
+    .small {
+      height: 60px;
+      width: 60px;
+    }
+
+    .medium {
       height: 30px;
       width: 30px;
+    }
+
+    .large {
+      height: 15px;
+      width: 15px;
     }
 
     @keyframes popIn {
@@ -231,5 +227,17 @@ main {
       background-color: $final-path-color;
       animation: popIn 0.3s;
     }
+  }
+
+  .small-grid {
+    grid-template-columns: repeat(17, 1fr);
+  }
+
+  .medium-grid {
+    grid-template-columns: repeat(61, 1fr);
+  }
+
+  .large-grid {
+    grid-template-columns: repeat(119, 1fr);
   }
 }

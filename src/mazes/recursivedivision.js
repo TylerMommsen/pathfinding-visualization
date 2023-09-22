@@ -1,5 +1,4 @@
-export default async function recursiveDivision(grid) {
-  const delay = 5;
+export default async function recursiveDivision(grid, delay) {
   const rows = grid.length;
   const cols = grid[0].length;
   let isFinished = false; // is recursive process finished?
@@ -31,7 +30,9 @@ export default async function recursiveDivision(grid) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (row === 0 || row === rows - 1 || col === 0 || col === cols - 1) {
-        await new Promise((resolve) => setTimeout(resolve, delay));
+        if (delay > 0) {
+          await new Promise((resolve) => setTimeout(resolve, 5));
+        }
         grid[row][col].setNodeType('barrier');
       }
     }
@@ -56,7 +57,9 @@ export default async function recursiveDivision(grid) {
       // make a horizontal wall
       for (let col = startCol; col <= endCol; col++) {
         if (col !== passageCol) {
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          if (delay > 0) {
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          }
           grid[wallRow][col].setNodeType('barrier');
         }
       }
@@ -64,7 +67,9 @@ export default async function recursiveDivision(grid) {
       // make a vertical wall
       for (let row = startRow; row <= endRow; row++) {
         if (row !== passageRow) {
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          if (delay > 0) {
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          }
           grid[row][wallCol].setNodeType('barrier');
         }
       }

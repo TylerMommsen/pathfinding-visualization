@@ -2,9 +2,10 @@ import Node from './node';
 import DomHandler from './domhandler';
 
 export default class Grid {
-  constructor(rows, cols) {
+  constructor(rows, cols, nodeWidth) {
     this.rows = rows;
     this.cols = cols;
+    this.nodeWidth = nodeWidth;
     this.start = { node: null };
     this.end = { node: null };
     this.grid = [];
@@ -77,11 +78,11 @@ export default class Grid {
     for (let row = 1; row <= rows; row++) {
       const currentRow = [];
       for (let col = 1; col <= cols; col++) {
-        currentRow.push(new Node(row, col, this));
+        currentRow.push(new Node(row, col, rows, cols, this));
       }
       this.grid.push(currentRow);
     }
-    DomHandler.displayGrid(this.grid);
+    DomHandler.displayGrid(this.grid, this.nodeWidth);
   }
 
   setAllNodeNeighbors() {
@@ -112,5 +113,27 @@ export default class Grid {
 
     // reseting dom squares
     DomHandler.resetGrid();
+  }
+
+  resetPath() {
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        const currNode = this.grid[row][col];
+        if (
+          currNode.nodeType === 'open-list' ||
+          currNode.nodeType === 'closed-list' ||
+          currNode.nodeType === 'final-path'
+        ) {
+          currNode.setNodeType('empty');
+        }
+      }
+    }
+  }
+
+  updateGridSize(rows, cols, nodeWidth) {
+    this.rows = rows;
+    this.cols = cols;
+    this.nodeWidth = nodeWidth;
+    this.resetGrid();
   }
 }

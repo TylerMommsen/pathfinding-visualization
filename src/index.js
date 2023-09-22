@@ -1,4 +1,4 @@
 import './scss/main.scss';
-import load from './mainloop';
+import load from './mainhandler';
 
 load();

@@ -1,5 +1,4 @@
-export default async function generatePrims(grid) {
-  const delay = 10;
+export default async function generatePrims(grid, delay) {
   const rows = grid.length;
   const cols = grid[0].length;
   const frontier = [];
@@ -85,7 +84,9 @@ export default async function generatePrims(grid) {
   });
 
   while (frontier.length > 0) {
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    if (delay > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
     const randomIndex = Math.floor(Math.random() * frontier.length);
     const randomFrontierNode = frontier[randomIndex];
     const frontierNeighbors = getNeighbors(randomFrontierNode);
