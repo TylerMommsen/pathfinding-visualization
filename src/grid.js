@@ -51,12 +51,13 @@ export default class Grid {
     const gridContainer = document.querySelector('.grid-container');
     const gridContainerChildren = gridContainer.children;
     const index = row * this.cols + col;
+    console.log(gridContainerChildren.length);
     return gridContainerChildren[index];
   }
 
   addListeners(currentlyRunning) {
-    for (let row = 0; row < this.grid.length; row++) {
-      for (let col = 0; col < this.grid[row].length; col++) {
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
         const gridSquare = this.findDomSquare(row, col);
         gridSquare.addEventListener('mousedown', () => {
           if (currentlyRunning[0]) return;
@@ -78,7 +79,7 @@ export default class Grid {
     for (let row = 1; row <= rows; row++) {
       const currentRow = [];
       for (let col = 1; col <= cols; col++) {
-        currentRow.push(new Node(row, col, rows, cols, this));
+        currentRow.push(new Node(row, col, this.rows, this.cols, this, this.nodeWidth));
       }
       this.grid.push(currentRow);
     }
@@ -99,7 +100,7 @@ export default class Grid {
     for (let row = 1; row <= this.rows; row++) {
       const currentRow = [];
       for (let col = 1; col <= this.cols; col++) {
-        currentRow.push(new Node(row, col, this));
+        currentRow.push(new Node(row, col, this.rows, this.cols, this, this.nodeWidth));
       }
       this.grid.push(currentRow);
     }
@@ -112,7 +113,7 @@ export default class Grid {
     this.end.node = null;
 
     // reseting dom squares
-    DomHandler.resetGrid();
+    DomHandler.resetGrid(this.nodeWidth);
   }
 
   resetPath() {
@@ -135,5 +136,7 @@ export default class Grid {
     this.cols = cols;
     this.nodeWidth = nodeWidth;
     this.resetGrid();
+    DomHandler.displayGrid(this.grid, nodeWidth);
+    this.addListeners([false]);
   }
 }

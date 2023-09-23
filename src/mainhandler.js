@@ -21,13 +21,13 @@ function loadGrid() {
   gridObj = new Grid(rows, cols, 'medium');
 }
 
-async function runAStar() {
+function runAStar() {
   const startNode = gridObj.start.node;
   const endNode = gridObj.end.node;
 
   try {
     running[0] = true;
-    const pathFound = await astar(startNode, endNode, pathfindingSpeed);
+    const pathFound = astar(startNode, endNode, pathfindingSpeed);
 
     if (pathFound) {
       console.log('found path');
@@ -42,13 +42,13 @@ async function runAStar() {
   }
 }
 
-async function runDijkstra() {
+function runDijkstra() {
   const startNode = gridObj.start.node;
   const endNode = gridObj.end.node;
 
   try {
     running[0] = true;
-    const pathFound = await dijkstra(gridObj.grid, startNode, endNode, pathfindingSpeed);
+    const pathFound = dijkstra(gridObj.grid, startNode, endNode, pathfindingSpeed);
 
     if (pathFound) {
       console.log('found path');
@@ -121,22 +121,19 @@ function updatePathfindingDelay(speed) {
 
 function updateGridSize(size) {
   if (size === 'Small') {
-    rows = 7;
-    cols = 17;
+    rows = 9;
+    cols = 23;
     gridObj.updateGridSize(rows, cols, 'small');
-    DomHandler.displayGrid(gridObj.grid, 'small');
   }
   if (size === 'Medium') {
     rows = 25;
     cols = 61;
     gridObj.updateGridSize(rows, cols, 'medium');
-    DomHandler.displayGrid(gridObj.grid, 'medium');
   }
   if (size === 'Large') {
     rows = 49;
     cols = 119;
     gridObj.updateGridSize(rows, cols, 'large');
-    DomHandler.displayGrid(gridObj.grid, 'large');
   }
 }
 

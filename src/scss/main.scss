@@ -174,8 +174,8 @@ main {
     }
 
     .small {
-      height: 60px;
-      width: 60px;
+      height: 80px;
+      width: 80px;
     }
 
     .medium {
@@ -230,7 +230,7 @@ main {
   }
 
   .small-grid {
-    grid-template-columns: repeat(17, 1fr);
+    grid-template-columns: repeat(23, 1fr);
   }
 
   .medium-grid {

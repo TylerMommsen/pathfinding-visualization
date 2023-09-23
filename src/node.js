@@ -1,8 +1,9 @@
 import DomHandler from './domhandler';
 
 export default class Node {
-  constructor(row, col, totalRows, totalCols, grid) {
-    this.nodeWidth = 30; // px width and height of square
+  constructor(row, col, totalRows, totalCols, grid, nodeSize) {
+    this.nodeWidth = null;
+    this.setNodeWidth(nodeSize); // px width and height of square
     this.totalRows = totalRows;
     this.totalCols = totalCols;
     this.row = row;
@@ -20,9 +21,19 @@ export default class Node {
     this.h = 0;
   }
 
+  setNodeWidth(nodeSize) {
+    if (nodeSize === 'small') {
+      this.nodeWidth = 80;
+    } else if (nodeSize === 'medium') {
+      this.nodeWidth = 30;
+    } else if (nodeSize === 'large') {
+      this.nodeWidth = 15;
+    }
+  }
+
   setNodeType(newNodeType) {
     this.nodeType = newNodeType;
-    DomHandler.displayAlgorithm(this, this.grid);
+    DomHandler.displayAlgorithm(this, this.grid, this.nodeWidth);
   }
 
   // calc f, g and h scores
