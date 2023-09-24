@@ -8,7 +8,22 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: normal;
   line-height: 1;
+}
+
+@mixin list-item-styles($bg-color, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: normal;
+  line-height: 1;
+  transition: 0.15s ease-in-out;
 }

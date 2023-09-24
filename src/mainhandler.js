@@ -66,7 +66,7 @@ function runDijkstra() {
 const startBtn = document.querySelector('.start-algorithm');
 
 startBtn.addEventListener('click', async () => {
-  if (running[0]) return; // algorithm in progress
+  if (running[0] || selectedAlgorithm === null) return; // algorithm in progress
   gridObj.setAllNodeNeighbors();
   gridObj.resetPath();
 
@@ -82,7 +82,7 @@ startBtn.addEventListener('click', async () => {
 const generateMazeBtn = document.querySelector('.generate-maze');
 
 generateMazeBtn.addEventListener('click', async () => {
-  if (running[0]) return; // algorithm in progress
+  if (running[0] || selectedMaze === null) return; // algorithm in progress
   running[0] = true;
   gridObj.resetGrid();
 

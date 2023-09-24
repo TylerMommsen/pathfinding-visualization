@@ -84,7 +84,7 @@ nav {
 
   .btn {
     @include button-styles($button-color, $button-text-color);
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
 
     &:hover {
       background-color: $button-hover-color;
@@ -100,58 +100,101 @@ nav {
 
   .generate-maze {
     @include button-styles($generate-maze-button-color, black);
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken($generate-maze-button-color, 10%);
+    }
+
+    &:active {
+      background-color: darken($generate-maze-button-color, 15%);
+    }
   }
 
   .start-algorithm {
     @include button-styles($start-button-color, black);
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken($start-button-color, 10%);
+    }
+
+    &:active {
+      background-color: darken($start-button-color, 15%);
+    }
   }
 }
 
-.dropdown {
+.dropdown-btn {
   position: relative;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  perspective: 1000px;
 
-  .dropdown-btn-container {
-    display: flex;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover .dropdown-list .list-selection {
+    display: block;
   }
 }
 
 .dropdown-list {
-  display: none;
   position: absolute;
-  min-width: 160px;
-  max-height: 0;
-  text-align: center;
-  transition: max-height 0.4s ease-in-out;
+  width: auto;
+  top: 100%;
+  left: 0;
+  z-index: -1;
+  perspective: 1000px;
   border-radius: 10px;
   padding: 5px;
-  margin-top: 5px;
   background-color: $button-color;
+  box-shadow: 2px 6px 8px 2px rgba($color: #000000, $alpha: 0.2);
+  min-width: 100%;
 
   .list-selection {
-    background-color: $button-color;
-    color: $button-text-color;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 10px 20px 10px 20px;
-    width: 100%;
-    border: none;
-    transition: 0.2s ease;
-    border-radius: 10px;
+    @include list-item-styles($button-color, $button-text-color);
+    width: auto;
+    display: none;
+    opacity: 0;
 
     &:hover {
       background-color: $button-hover-color;
       color: $button-text-hover-color;
     }
   }
+}
 
-  &.show {
-    max-height: 300px;
+.dropdown-btn:hover .dropdown-list-animated {
+  display: block;
+}
+
+.dropdown-list-animated {
+  display: none;
+  .list-selection {
+    display: block;
+    opacity: 1;
   }
 }
 
-.show {
-  display: block;
+.dropdown-list {
+  animation: growDown 300ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+@keyframes growDown {
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 main {
