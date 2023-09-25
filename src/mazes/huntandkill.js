@@ -133,7 +133,9 @@ export default async function generateHuntAndKill(grid, delay) {
     let currentNode = generateStartPoint(); // get start node
 
     while (currentNode) {
-      await new Promise((resolve) => setTimeout(resolve, delay));
+      if (delay > 0) {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
       visited.push(currentNode);
       const neighbors = getUnvisitedNeighbors(currentNode);
 
@@ -144,23 +146,6 @@ export default async function generateHuntAndKill(grid, delay) {
       } else {
         currentNode = null;
 
-        // hunt phase
-        // for (let row = 1; row < rows - 1; row += 2) {
-        //   for (let col = 1; col < cols - 1; col += 2) {
-        //     const node = grid[row][col];
-        //     const nodeNeighbors = getUnvisitedNeighbors(node);
-        //     if (visited.includes(node) && nodeNeighbors.length > 0) {
-        //       currentNode = node;
-        //       const randomlySelectedNeighbor = randomlySelectNeighbor(nodeNeighbors);
-        //       removeWallBetween(currentNode, randomlySelectedNeighbor);
-        //       visited.push(randomlySelectedNeighbor);
-        //       break;
-        //     }
-        //   }
-        //   if (currentNode) {
-        //     break;
-        //   }
-        // }
         for (let row = 1; row < rows - 1; row += 2) {
           for (let col = 1; col < cols - 1; col += 2) {
             const node = grid[row][col];

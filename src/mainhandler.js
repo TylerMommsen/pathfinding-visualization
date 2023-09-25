@@ -7,6 +7,7 @@ import sidewinder from './mazes/sidewinder';
 import recursiveDivision from './mazes/recursivedivision';
 import generatePrims from './mazes/prims';
 import generateHuntAndKill from './mazes/huntandkill';
+import bidirectional from './algorithms/bidirectional';
 
 let gridObj = null;
 let rows = 25;
@@ -66,6 +67,27 @@ async function runDijkstra() {
   }
 }
 
+async function runBidirectional() {
+  const startNode = gridObj.start.node;
+  const endNode = gridObj.end.node;
+
+  try {
+    running[0] = true;
+    const pathFound = await bidirectional(startNode, endNode, pathfindingSpeed);
+
+    if (pathFound) {
+      console.log('found path');
+      running[0] = false;
+    } else {
+      console.log('path not found');
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    running[0] = false;
+  }
+}
+
 const startBtn = document.querySelector('.start-algorithm');
 
 startBtn.addEventListener('click', async () => {
@@ -77,6 +99,7 @@ startBtn.addEventListener('click', async () => {
   if (gridObj.start.node && gridObj.end.node) {
     if (selectedAlgorithm === 'A*') done = await runAStar();
     if (selectedAlgorithm === 'Dijkstra') done = await runDijkstra();
+    if (selectedAlgorithm === 'Bidirectional') done = await runBidirectional();
   }
 
   if (done) running[0] = false;
