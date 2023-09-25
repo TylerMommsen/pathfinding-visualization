@@ -30,9 +30,6 @@ export default async function recursiveDivision(grid, delay) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (row === 0 || row === rows - 1 || col === 0 || col === cols - 1) {
-        if (delay > 0) {
-          await new Promise((resolve) => setTimeout(resolve, 5));
-        }
         grid[row][col].setNodeType('barrier');
       }
     }

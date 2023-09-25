@@ -51,7 +51,6 @@ export default class Grid {
     const gridContainer = document.querySelector('.grid-container');
     const gridContainerChildren = gridContainer.children;
     const index = row * this.cols + col;
-    console.log(gridContainerChildren.length);
     return gridContainerChildren[index];
   }
 

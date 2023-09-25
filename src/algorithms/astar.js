@@ -74,12 +74,9 @@ export default function astar(startNode, endNode, delay) {
     }
 
     if (openList.length > 0) {
-      algorithm();
-    } else {
-      return false;
+      return algorithm();
     }
   }
 
-  const done = algorithm();
-  return done;
+  return algorithm();
 }

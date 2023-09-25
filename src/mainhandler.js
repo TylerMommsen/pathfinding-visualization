@@ -6,7 +6,7 @@ import binaryTree from './mazes/binarytree';
 import sidewinder from './mazes/sidewinder';
 import recursiveDivision from './mazes/recursivedivision';
 import generatePrims from './mazes/prims';
-import DomHandler from './domhandler';
+import generateHuntAndKill from './mazes/huntandkill';
 
 let gridObj = null;
 let rows = 25;
@@ -14,20 +14,23 @@ let cols = 61;
 let selectedAlgorithm = null;
 let selectedMaze = null;
 const running = [false]; // check if algorithm is currently running
+let currMazeSpeedSetting = 'Normal';
+let currPathfindingSpeedSetting = 'Normal';
 let mazeSpeed = 10;
 let pathfindingSpeed = 10;
+let gridSize = 'medium';
 
 function loadGrid() {
-  gridObj = new Grid(rows, cols, 'medium');
+  gridObj = new Grid(rows, cols, gridSize);
 }
 
-function runAStar() {
+async function runAStar() {
   const startNode = gridObj.start.node;
   const endNode = gridObj.end.node;
 
   try {
     running[0] = true;
-    const pathFound = astar(startNode, endNode, pathfindingSpeed);
+    const pathFound = await astar(startNode, endNode, pathfindingSpeed);
 
     if (pathFound) {
       console.log('found path');
@@ -42,13 +45,13 @@ function runAStar() {
   }
 }
 
-function runDijkstra() {
+async function runDijkstra() {
   const startNode = gridObj.start.node;
   const endNode = gridObj.end.node;
 
   try {
     running[0] = true;
-    const pathFound = dijkstra(gridObj.grid, startNode, endNode, pathfindingSpeed);
+    const pathFound = await dijkstra(gridObj.grid, startNode, endNode, pathfindingSpeed);
 
     if (pathFound) {
       console.log('found path');
@@ -72,8 +75,8 @@ startBtn.addEventListener('click', async () => {
 
   let done;
   if (gridObj.start.node && gridObj.end.node) {
-    if (selectedAlgorithm === 'A*') done = runAStar();
-    if (selectedAlgorithm === 'Dijkstra') done = runDijkstra();
+    if (selectedAlgorithm === 'A*') done = await runAStar();
+    if (selectedAlgorithm === 'Dijkstra') done = await runDijkstra();
   }
 
   if (done) running[0] = false;
@@ -102,20 +105,49 @@ generateMazeBtn.addEventListener('click', async () => {
   if (selectedMaze === "Prim's") {
     done = await generatePrims(gridObj.grid, mazeSpeed);
   }
+  if (selectedMaze === 'Hunt & Kill') {
+    done = await generateHuntAndKill(gridObj.grid, mazeSpeed);
+  }
   if (done) running[0] = false;
 });
 
 function updateMazeDelay(speed) {
-  if (speed === 'Slow') mazeSpeed = 20;
-  if (speed === 'Normal') mazeSpeed = 10;
-  if (speed === 'Fast') mazeSpeed = 1;
+  if (gridSize === 'small') {
+    if (speed === 'Slow') mazeSpeed = 200;
+    if (speed === 'Normal') mazeSpeed = 50;
+    if (speed === 'Fast') mazeSpeed = 25;
+  }
+  if (gridSize === 'medium') {
+    if (speed === 'Slow') mazeSpeed = 20;
+    if (speed === 'Normal') mazeSpeed = 10;
+    if (speed === 'Fast') mazeSpeed = 1;
+  }
+  if (gridSize === 'large') {
+    if (speed === 'Slow') mazeSpeed = 10;
+    if (speed === 'Normal') mazeSpeed = 5;
+    if (speed === 'Fast') mazeSpeed = 0.1;
+  }
+
   if (speed === 'Instant') mazeSpeed = 0;
 }
 
 function updatePathfindingDelay(speed) {
-  if (speed === 'Slow') pathfindingSpeed = 30;
-  if (speed === 'Normal') pathfindingSpeed = 10;
-  if (speed === 'Fast') pathfindingSpeed = 5;
+  if (gridSize === 'small') {
+    if (speed === 'Slow') pathfindingSpeed = 250;
+    if (speed === 'Normal') pathfindingSpeed = 100;
+    if (speed === 'Fast') pathfindingSpeed = 30;
+  }
+  if (gridSize === 'medium') {
+    if (speed === 'Slow') pathfindingSpeed = 30;
+    if (speed === 'Normal') pathfindingSpeed = 10;
+    if (speed === 'Fast') pathfindingSpeed = 5;
+  }
+  if (gridSize === 'large') {
+    if (speed === 'Slow') pathfindingSpeed = 30;
+    if (speed === 'Normal') pathfindingSpeed = 10;
+    if (speed === 'Fast') pathfindingSpeed = 1;
+  }
+
   if (speed === 'Instant') pathfindingSpeed = 0;
 }
 
@@ -123,18 +155,24 @@ function updateGridSize(size) {
   if (size === 'Small') {
     rows = 9;
     cols = 23;
-    gridObj.updateGridSize(rows, cols, 'small');
+    gridSize = 'small';
+    gridObj.updateGridSize(rows, cols, gridSize);
   }
   if (size === 'Medium') {
     rows = 25;
     cols = 61;
-    gridObj.updateGridSize(rows, cols, 'medium');
+    gridSize = 'medium';
+    gridObj.updateGridSize(rows, cols, gridSize);
   }
   if (size === 'Large') {
     rows = 49;
     cols = 119;
-    gridObj.updateGridSize(rows, cols, 'large');
+    gridSize = 'large';
+    gridObj.updateGridSize(rows, cols, gridSize);
   }
+
+  updatePathfindingDelay(currPathfindingSpeedSetting);
+  updateMazeDelay(currPathfindingSpeedSetting);
 }
 
 function addListenersToBtns() {
@@ -211,6 +249,7 @@ function addListenersToBtns() {
     item.addEventListener('click', (e) => {
       selectMazeSpeedBtnList.classList.remove('show');
       selectMazeSpeedBtn.textContent = 'Maze Speed ' + `(${item.textContent})`;
+      currMazeSpeedSetting = item.textContent;
       updateMazeDelay(item.textContent);
       e.stopPropagation();
     });
@@ -220,6 +259,7 @@ function addListenersToBtns() {
     item.addEventListener('click', (e) => {
       selectAlgoSpeedBtnList.classList.remove('show');
       selectAlgoSpeedBtn.textContent = 'Algorithm Speed ' + `(${item.textContent})`;
+      currPathfindingSpeedSetting = item.textContent;
       updatePathfindingDelay(item.textContent);
       e.stopPropagation();
     });
