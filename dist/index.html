@@ -37,7 +37,7 @@
         </div>
 
         <div class="dropdown-btn">
-          <p class="btn grid-size-btn">Grid Size (Medium)</p>
+          <p class="btn grid-size-btn">Grid Size: Medium</p>
           <ul class="dropdown-list dropdown-list-animated grid-size-list">
             <li class="list-selection">Small</li>
             <li class="list-selection">Medium</li>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="dropdown-btn">
-          <p class="btn select-maze-speed-btn">Maze Speed (Normal)</p>
+          <p class="btn select-maze-speed-btn">Maze Speed: Normal</p>
           <ul class="dropdown-list dropdown-list-animated maze-speed-list">
             <li class="list-selection">Slow</li>
             <li class="list-selection">Normal</li>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="dropdown-btn">
-          <p class="btn select-algo-speed-btn">Pathfinding Speed (Normal)</p>
+          <p class="btn select-algo-speed-btn">Pathfinding Speed: Normal</p>
           <ul class="dropdown-list dropdown-list-animated algo-speed-list">
             <li class="list-selection">Slow</li>
             <li class="list-selection">Normal</li>
@@ -74,6 +74,99 @@
         <button class="start-algorithm">Start</button>
       </div>
     </nav>
+
+    <div class="dark-overlay"></div>
+
+    <div class="help-board">
+      <div class="page page-1" id="show-page">
+        <p class="page-number">1/5</p>
+        <h2 class="help-title">Welcome!</h2>
+        <p>This is a short tutorial on how to use this visualizer tool.</p>
+        <p>If you want to get started right away then feel free to click 'Skip'!</p>
+        <p>
+          If you're interested in seeing the source code, then check out the repo here on
+          <a href="https://github.com/TylerMommsen/pathfinding-visualization" target="_blank"
+            >GitHub</a
+          >.
+        </p>
+
+        <div class="help-buttons">
+          <button class="btn skip-btn">Skip</button>
+          <div class="next-and-previous">
+            <button class="btn previous-btn">Previous</button>
+            <button class="btn next-btn">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="page page-2">
+        <p class="page-number">2/5</p>
+        <h2 class="help-title">Pick Your Algorithm</h2>
+        <p>Hover over the algorithm dropdown and select the algorithm of your choice.</p>
+
+        <div class="help-buttons">
+          <button class="btn skip-btn">Skip</button>
+          <div class="next-and-previous">
+            <button class="btn previous-btn">Previous</button>
+            <button class="btn next-btn">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="page page-3">
+        <p class="page-number">3/5</p>
+        <h2 class="help-title">Add Nodes</h2>
+        <p>Place your start and end node first and all subsequent nodes will be walls.</p>
+
+        <div class="help-buttons">
+          <button class="btn skip-btn">Skip</button>
+          <div class="next-and-previous">
+            <button class="btn previous-btn">Previous</button>
+            <button class="btn next-btn">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="page page-4">
+        <p class="page-number">4/5</p>
+        <h2 class="help-title">Adjust Customizations</h2>
+        <p>Check out the other available customization options!</p>
+        <div class="container">
+          <ul>
+            <li>Select Maze - Choose a unique maze to generate to test pathfinding.</li>
+            <li>Grid Size - Change grid size from small, medium and large.</li>
+            <li>Maze Speed - Change maze generation speed.</li>
+            <li>Pathfinding Speed - Change pathfinding exploration speed.</li>
+          </ul>
+        </div>
+
+        <div class="help-buttons">
+          <button class="btn skip-btn">Skip</button>
+          <div class="next-and-previous">
+            <button class="btn previous-btn">Previous</button>
+            <button class="btn next-btn">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="page page-5">
+        <p class="page-number">5/5</p>
+        <h2 class="help-title">Start!</h2>
+        <p>
+          Once you have made your customizations, click Generate Maze (if any selected), place your
+          nodes and press Start to watch the algorithm work!
+        </p>
+        <p>Enjoy!</p>
+
+        <div class="help-buttons">
+          <button class="btn skip-btn">Skip</button>
+          <div class="next-and-previous">
+            <button class="btn previous-btn">Previous</button>
+            <button class="btn continue-btn">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <main>
       <div class="grid-container"></div>

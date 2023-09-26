@@ -222,6 +222,47 @@ function addListenersToBtns() {
   const clearPathBtn = document.querySelector('.clear-path');
   const eraseModeBtn = document.querySelector('.erase-mode');
 
+  let currentPage = 0;
+  const darkOverlay = document.querySelector('.dark-overlay');
+  const helpBoard = document.querySelector('.help-board');
+  const pages = helpBoard.querySelectorAll('.page');
+  const skipBtns = helpBoard.querySelectorAll('.skip-btn');
+  const nextBtns = helpBoard.querySelectorAll('.next-btn');
+  const previousBtns = helpBoard.querySelectorAll('.previous-btn');
+  const continueBtn = helpBoard.querySelector('.continue-btn');
+
+  skipBtns.forEach((skipBtn) => {
+    skipBtn.addEventListener('click', () => {
+      helpBoard.style.display = 'none';
+      darkOverlay.style.display = 'none';
+    });
+  });
+
+  previousBtns.forEach((previousBtn) => {
+    previousBtn.addEventListener('click', () => {
+      if (currentPage > 0) {
+        pages[currentPage].removeAttribute('id');
+        currentPage -= 1;
+        pages[currentPage].setAttribute('id', 'show-page');
+      }
+    });
+  });
+
+  nextBtns.forEach((nextBtn) => {
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < pages.length - 1) {
+        pages[currentPage].removeAttribute('id');
+        currentPage += 1;
+        pages[currentPage].setAttribute('id', 'show-page');
+      }
+    });
+  });
+
+  continueBtn.addEventListener('click', () => {
+    helpBoard.style.display = 'none';
+    darkOverlay.style.display = 'none';
+  });
+
   function closeDropdowns() {
     dropdownLists.forEach((list) => {
       list.classList.remove('show');
@@ -272,7 +313,7 @@ function addListenersToBtns() {
   selectMazeSpeedListItems.forEach((item) => {
     item.addEventListener('click', (e) => {
       selectMazeSpeedBtnList.classList.remove('show');
-      selectMazeSpeedBtn.textContent = 'Maze Speed ' + `(${item.textContent})`;
+      selectMazeSpeedBtn.textContent = 'Maze Speed: ' + `${item.textContent}`;
       currMazeSpeedSetting = item.textContent;
       updateMazeDelay(item.textContent);
       e.stopPropagation();
@@ -282,7 +323,7 @@ function addListenersToBtns() {
   selectAlgoSpeedListItems.forEach((item) => {
     item.addEventListener('click', (e) => {
       selectAlgoSpeedBtnList.classList.remove('show');
-      selectAlgoSpeedBtn.textContent = 'Algorithm Speed ' + `(${item.textContent})`;
+      selectAlgoSpeedBtn.textContent = 'Pathfinding Speed: ' + `${item.textContent}`;
       currPathfindingSpeedSetting = item.textContent;
       updatePathfindingDelay(item.textContent);
       e.stopPropagation();
@@ -292,7 +333,7 @@ function addListenersToBtns() {
   gridSizeListItems.forEach((item) => {
     item.addEventListener('click', (e) => {
       gridSizeBtnList.classList.remove('show');
-      gridSizeBtn.textContent = 'Grid Size ' + `(${item.textContent})`;
+      gridSizeBtn.textContent = 'Grid Size: ' + `${item.textContent}`;
       updateGridSize(item.textContent);
       e.stopPropagation();
     });

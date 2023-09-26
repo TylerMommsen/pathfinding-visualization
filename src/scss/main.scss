@@ -38,6 +38,94 @@ header {
   }
 }
 
+.dark-overlay {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  z-index: 99;
+}
+
+#show-page {
+  display: flex;
+}
+
+.help-board {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 30px 50px 30px;
+  background-color: white;
+  height: 800px;
+  width: 1000px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px 2px rgba($color: #000000, $alpha: 0.2);
+
+  .page {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+
+    .help-title {
+      letter-spacing: 0.3rem;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 50px;
+      width: auto;
+    }
+
+    .help-buttons {
+      display: flex;
+      margin-top: auto;
+      justify-content: space-between;
+      text-align: center;
+
+      .btn {
+        @include help-button-styles($help-btn-bg-color, $help-btn-text-color);
+        transition: 0.15s ease-in-out;
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+
+  ul {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    line-height: 1.5;
+    font-size: 22px;
+    align-self: center;
+    width: 60ch;
+    text-align: center;
+  }
+}
+
 footer {
   gap: 10px;
   font-family: 'Montserrat', sans-serif;
