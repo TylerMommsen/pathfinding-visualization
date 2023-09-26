@@ -7,6 +7,7 @@ function displayAlgorithm(node, grid, squareSize) {
   domSquare.removeAttribute('class');
   domSquare.classList.add('grid-square');
   domSquare.classList.add(node.nodeType);
+  console.log(domSquare);
   if (squareSize === 80) {
     domSquare.classList.add('small');
   } else if (squareSize === 30) {

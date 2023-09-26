@@ -220,6 +220,7 @@ function addListenersToBtns() {
   const dropdownLists = document.querySelectorAll('.dropdown-list');
   const clearBoardBtn = document.querySelector('.clear-board');
   const clearPathBtn = document.querySelector('.clear-path');
+  const eraseModeBtn = document.querySelector('.erase-mode');
 
   function closeDropdowns() {
     dropdownLists.forEach((list) => {
@@ -305,6 +306,16 @@ function addListenersToBtns() {
   clearPathBtn.addEventListener('click', () => {
     if (running[0]) return; // algorithm in progress
     gridObj.resetPath();
+  });
+
+  eraseModeBtn.addEventListener('click', (e) => {
+    if (running[0]) return; // algorithm in progress
+    if (e.target.textContent === 'Erase: Off') {
+      e.target.textContent = 'Erase: On';
+    } else if (e.target.textContent === 'Erase: On') {
+      e.target.textContent = 'Erase: Off';
+    }
+    gridObj.setEraseMode();
   });
 }
 

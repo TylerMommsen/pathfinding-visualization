@@ -15,11 +15,20 @@ export default class Grid {
     this.createGrid(this.rows, this.cols);
 
     this.isDragging = false;
+    this.eraseModeOn = false;
   }
 
   setSquareStatus(gridSquare, row, col) {
     const currentNode = this.grid[row][col];
+    if (this.eraseModeOn) {
+      if (currentNode === this.start.node) this.start.node = null;
+      if (currentNode === this.end.node) this.end.node = null;
+      currentNode.setNodeType('empty');
+      return;
+    }
+
     if (currentNode.nodeType !== 'empty') return;
+
     if (this.start.node === null) {
       currentNode.nodeType = 'start';
       this.start.node = currentNode;
@@ -137,5 +146,9 @@ export default class Grid {
     this.resetGrid();
     DomHandler.displayGrid(this.grid, nodeWidth);
     this.addListeners([false]);
+  }
+
+  setEraseMode() {
+    this.eraseModeOn = !this.eraseModeOn;
   }
 }
