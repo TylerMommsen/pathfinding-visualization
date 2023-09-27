@@ -1,24 +1,27 @@
-$grid-outline-color: #000000;
+$grid-outline-color: rgba(54, 54, 54, 0.3);
 $empty-color: #ffffff;
-$start-node-color: #00ffff;
-$end-node-color: #7700ff;
-$barrier-color: #000000;
-$final-path-color: #ffff00;
-$open-list-color: #00ff00;
-$closed-list-color: #ff0000;
+$start-node-color: #19c9c0;
+$end-node-color: #aa5fff;
+$barrier-color: #363636;
+$final-path-color: #ffff47;
+$open-list-color: #4fff4f;
+$closed-list-color: #ff3838;
 
-$primary-color: #3a3a3a;
-$secondary-color: #ff0000;
-$text-color: #ffffff;
+$header-bg-color: #3d455a;
+$footer-bg-color: #3d455a;
+$header-txt-color: #ffffff;
+$footer-txt-color: #ffffff;
+$bg-color: white;
+$text-color: #424242;
 
-$button-text-color: #000000;
-$button-text-hover-color: #000000;
-$button-color: #ffffff;
-$button-hover-color: #ffff00;
-$button-active-color: #00c5c5;
-$button-focus-color: #00c5c5;
-$start-button-color: #5bff29;
-$generate-maze-button-color: #fff01a;
+$button-text-color: #363636;
+$button-bg-color: #ffffff;
+$button-bg-hover-color: #3d455a;
+$button-txt-hover-color: #ffffff;
+$start-button-color: #19c9c0;
+$start-button-txt-color: #ffffff;
+$generate-maze-button-color: #3d455a;
+$generate-maze-button-txt-color: #ffffff;
 
 $help-btn-bg-color: #19c9c0;
 $help-btn-text-color: #ffffff;
