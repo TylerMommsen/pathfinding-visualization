@@ -1,4 +1,4 @@
-export default function astar(startNode, endNode, delay) {
+export default function runAstar(startNode, endNode, delay) {
   const openList = [];
   const closedList = [];
   const finalPath = [];
@@ -13,9 +13,10 @@ export default function astar(startNode, endNode, delay) {
 
   async function displayFinalPath(path) {
     for (let i = path.length - 1; i >= 0; i--) {
-      if (path[i].nodeType === 'start' || path[i].nodeType === 'end') continue;
-      await new Promise((resolve) => setTimeout(resolve, 30));
-      path[i].setNodeType('final-path');
+      if (path[i].nodeType !== 'start' && path[i].nodeType !== 'end') {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+        path[i].setNodeType('final-path');
+      }
     }
   }
 
@@ -42,7 +43,7 @@ export default function astar(startNode, endNode, delay) {
         finalPath.push(temp.previousNode);
         temp = temp.previousNode;
       }
-      displayFinalPath(finalPath);
+      await displayFinalPath(finalPath);
       return true;
     }
 
@@ -76,6 +77,7 @@ export default function astar(startNode, endNode, delay) {
     if (openList.length > 0) {
       return algorithm();
     }
+    return null;
   }
 
   return algorithm();

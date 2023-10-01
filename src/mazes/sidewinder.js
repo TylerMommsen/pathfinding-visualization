@@ -1,49 +1,36 @@
-export default async function sidewinder(grid, delay) {
+export default async function sidewinder(gridObj, delay) {
+  gridObj.fillGrid(); // set the grid as walls
+
+  const grid = gridObj.grid;
   const rows = grid.length;
   const cols = grid[0].length;
 
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      if (row === 1 && col !== 0 && col !== cols - 1) continue;
-      if (col % 2 === 0) {
-        grid[row][col].setNodeType('barrier');
-      }
-      if (row % 2 === 0) {
-        grid[row][col].setNodeType('barrier');
-      }
+  // leave first row empty
+  for (let col = 0; col < cols; col++) {
+    if (col !== 0 && col !== cols - 1) {
+      grid[1][col].setNodeType('empty');
     }
   }
 
-  for (let row = 1; row < rows; row++) {
+  for (let row = 1; row < rows; row += 2) {
     let run = [];
     for (let col = 1; col < cols; col += 2) {
-      if (row % 2 === 0) continue;
+      const currentNode = grid[row][col];
+      currentNode.setNodeType('empty');
+      run.push(currentNode);
 
-      if (row === 1) {
+      if (Math.random() < 0.6 && col !== cols - 2) {
         if (delay > 0) {
           await new Promise((resolve) => setTimeout(resolve, delay));
         }
-        grid[row][col].setNodeType('empty');
-        continue;
-      }
-
-      const currentNode = grid[row][col];
-      run.push(currentNode);
-
-      if (col < cols - 1) {
-        if (Math.random() < 0.6 && col !== cols - 2) {
-          if (delay > 0) {
-            await new Promise((resolve) => setTimeout(resolve, delay));
-          }
-          currentNode.neighbors[0].setNodeType('empty');
-        } else if (run.length > 0 && row > 1) {
-          const randomIndex = Math.floor(Math.random() * run.length);
-          if (delay > 0) {
-            await new Promise((resolve) => setTimeout(resolve, delay));
-          }
-          run[randomIndex].neighbors[3].setNodeType('empty');
-          run = [];
+        currentNode.neighbors[0].setNodeType('empty');
+      } else if (run.length > 0 && row > 1) {
+        const randomIndex = Math.floor(Math.random() * run.length);
+        if (delay > 0) {
+          await new Promise((resolve) => setTimeout(resolve, delay));
         }
+        run[randomIndex].neighbors[3].setNodeType('empty');
+        run = [];
       }
     }
   }

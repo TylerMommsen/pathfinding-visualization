@@ -1,13 +1,7 @@
-export default async function dijkstra(grid, startNode, endNode, delay) {
+export default async function runDijkstra(startNode, endNode, delay) {
   const openListQueue = []; // tracks nodes to visit
   const closedList = [];
   const finalPath = [];
-
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      grid[row][col].g = Infinity;
-    }
-  }
 
   async function displayFinalPath(path) {
     for (let i = path.length - 1; i >= 0; i--) {
@@ -55,9 +49,9 @@ export default async function dijkstra(grid, startNode, endNode, delay) {
 
     if (openListQueue.length > 0) {
       algorithm();
-    } else {
-      return false;
     }
+
+    return false;
   }
 
   const done = algorithm();

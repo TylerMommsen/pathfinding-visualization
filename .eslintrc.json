@@ -9,6 +9,9 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-await-in-loop": "off",
+    "no-promise-executor-return": "off",
+    "prefer-destructuring": ["error", {"object": false, "array": false}]
   }
 }

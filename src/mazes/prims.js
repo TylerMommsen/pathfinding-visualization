@@ -1,15 +1,12 @@
-export default async function generatePrims(grid, delay) {
+export default async function generatePrims(gridObj, delay) {
+  // set the entire grid as barriers
+  gridObj.fillGrid();
+
+  const grid = gridObj.grid;
   const rows = grid.length;
   const cols = grid[0].length;
   const frontier = [];
-  const visited = [];
-
-  // set the entire grid as barriers
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      grid[row][col].setNodeType('barrier');
-    }
-  }
+  const visited = new Set();
 
   // add neighbors - directly adjacent neighbors are skipped so they can be walls if needed
   function getNeighbors(node) {
@@ -17,21 +14,13 @@ export default async function generatePrims(grid, delay) {
     const row = node.row - 1;
     const col = node.col - 1;
 
-    if (row > 1) {
-      neighbors.push(grid[row - 2][col]); // up
-    }
+    if (row > 1) neighbors.push(grid[row - 2][col]); // up
 
-    if (row < rows - 2) {
-      neighbors.push(grid[row + 2][col]); // down
-    }
+    if (row < rows - 2) neighbors.push(grid[row + 2][col]); // down
 
-    if (col > 1) {
-      neighbors.push(grid[row][col - 2]); // left
-    }
+    if (col > 1) neighbors.push(grid[row][col - 2]); // left
 
-    if (col < cols - 2) {
-      neighbors.push(grid[row][col + 2]); // right
-    }
+    if (col < cols - 2) neighbors.push(grid[row][col + 2]); // right
 
     return neighbors;
   }
@@ -63,16 +52,14 @@ export default async function generatePrims(grid, delay) {
   }
 
   // choose a random point on the grid to start with
-  let randomNodeFound = false;
   let randomFirstNode = null;
-  while (!randomNodeFound) {
+  while (randomFirstNode === null) {
     const randomRow = Math.floor(Math.random() * (rows - 4)) + 2;
     const randomCol = Math.floor(Math.random() * (cols - 4)) + 2;
     if (randomRow % 2 !== 0 && randomCol % 2 !== 0) {
       randomFirstNode = grid[randomRow][randomCol];
       randomFirstNode.setNodeType('empty');
-      visited.push(randomFirstNode);
-      randomNodeFound = true;
+      visited.add(randomFirstNode);
     }
   }
 
@@ -94,7 +81,7 @@ export default async function generatePrims(grid, delay) {
     // find out which 'in' nodes (part of maze) are adjacent
     const adjacentIns = [];
     for (let i = 0; i < frontierNeighbors.length; i++) {
-      if (visited.includes(frontierNeighbors[i])) {
+      if (visited.has(frontierNeighbors[i])) {
         adjacentIns.push(frontierNeighbors[i]);
       }
     }
@@ -106,7 +93,7 @@ export default async function generatePrims(grid, delay) {
         const wallBetween = getWallBetween(randomFrontierNode, randomAdjacentIn);
         const indexToSplice = frontier.indexOf(randomFrontierNode);
         connect(randomFrontierNode, randomAdjacentIn, wallBetween);
-        visited.push(randomFrontierNode);
+        visited.add(randomFrontierNode);
         frontier.splice(indexToSplice, 1);
       }
     }
@@ -115,7 +102,7 @@ export default async function generatePrims(grid, delay) {
     const neighborsToAdd = getNeighbors(randomFrontierNode);
     for (let i = 0; i < neighborsToAdd.length; i++) {
       if (neighborsToAdd[i]) {
-        if (!visited.includes(neighborsToAdd[i]) && !frontier.includes(neighborsToAdd[i])) {
+        if (!visited.has(neighborsToAdd[i]) && !frontier.includes(neighborsToAdd[i])) {
           frontier.push(neighborsToAdd[i]);
         }
       }

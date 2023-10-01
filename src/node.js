@@ -2,38 +2,40 @@ import DomHandler from './domhandler';
 
 export default class Node {
   constructor(row, col, totalRows, totalCols, grid, nodeSize) {
-    this.nodeWidth = null;
-    this.setNodeWidth(nodeSize); // px width and height of square
+    this.nodeSize = null; // holds px value of node width and height
+    this.setNodeWidth(nodeSize);
     this.totalRows = totalRows;
     this.totalCols = totalCols;
     this.row = row;
     this.col = col;
-    this.y = this.row * this.nodeWidth;
-    this.x = this.col * this.nodeWidth;
+    this.y = this.row * this.nodeSize;
+    this.x = this.col * this.nodeSize;
     this.nodeType = 'empty'; // used to update square display on dom e.g start, end or barrier
     this.neighbors = [];
     this.previousNode = null;
     this.grid = grid;
 
-    // astar scores
+    // used for Astar and Dijsktra
     this.f = 0;
     this.g = 0;
     this.h = 0;
   }
 
+  // adjust size of node in px
   setNodeWidth(nodeSize) {
     if (nodeSize === 'small') {
-      this.nodeWidth = 80;
+      this.nodeSize = 50;
     } else if (nodeSize === 'medium') {
-      this.nodeWidth = 30;
+      this.nodeSize = 30;
     } else if (nodeSize === 'large') {
-      this.nodeWidth = 15;
+      this.nodeSize = 20;
     }
   }
 
+  // change node type e.g barrier, start, end, open-list, closed-list
   setNodeType(newNodeType) {
+    DomHandler.displayNode(this, this.nodeType, newNodeType, this.grid);
     this.nodeType = newNodeType;
-    DomHandler.displayAlgorithm(this, this.grid, this.nodeWidth);
   }
 
   // calc f, g and h scores
@@ -44,6 +46,7 @@ export default class Node {
     return this.f;
   }
 
+  // set neighbors for current node (no diagonals)
   setNeighbors(grid) {
     const tempRow = this.row - 1;
     const tempCol = this.col - 1;

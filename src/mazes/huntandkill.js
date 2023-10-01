@@ -1,14 +1,11 @@
-export default async function generateHuntAndKill(grid, delay) {
+export default async function generateHuntAndKill(gridObj, delay) {
+  // set the entire grid as barriers
+  gridObj.fillGrid();
+
+  const grid = gridObj.grid;
   const rows = grid.length;
   const cols = grid[0].length;
   const visited = [];
-
-  // set the entire grid as barriers
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      grid[row][col].setNodeType('barrier');
-    }
-  }
 
   // add neighbors - directly adjacent neighbors are skipped so they can be walls if needed
   function getUnvisitedNeighbors(node) {

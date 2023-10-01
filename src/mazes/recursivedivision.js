@@ -1,4 +1,5 @@
-export default async function recursiveDivision(grid, delay) {
+export default async function recursiveDivision(gridObj, delay) {
+  const grid = gridObj.grid;
   const rows = grid.length;
   const cols = grid[0].length;
   let isFinished = false; // is recursive process finished?
@@ -13,17 +14,17 @@ export default async function recursiveDivision(grid, delay) {
     return random % 2 !== 0 ? random : random + 1;
   }
 
+  // choose to place wall vertically or horizontally
   function chooseOrientation(startRow, endRow, startCol, endCol) {
     const width = endCol - startCol;
     const height = endRow - startRow;
-    if (width > height) {
-      return 'vertical';
-    } else if (width < height) {
-      return 'horizontal';
+    if (width > height) return 'vertical';
+    if (width < height) return 'horizontal';
+    if (width === height) {
+      const random = Math.floor(Math.random() * 2);
+      return random === 0 ? 'horizontal' : 'vertical';
     }
-
-    const random = Math.floor(Math.random() * 2);
-    return random === 0 ? 'horizontal' : 'vertical';
+    return null;
   }
 
   // set edges of grid as barriers

@@ -1,4 +1,4 @@
-export default async function bidirectional(startNode, endNode, delay) {
+export default async function runBidirectional(startNode, endNode, delay) {
   const visitedForwards = new Set();
   const visitedBackwards = new Set();
 
@@ -52,10 +52,10 @@ export default async function bidirectional(startNode, endNode, delay) {
     }
 
     for (let i = 0; i < joinedFinalPath.length; i++) {
-      if (joinedFinalPath[i].nodeType === 'start' || joinedFinalPath[i].nodeType === 'end')
-        continue;
-      await new Promise((resolve) => setTimeout(resolve, 30));
-      joinedFinalPath[i].setNodeType('final-path');
+      if (joinedFinalPath[i].nodeType !== 'start' && joinedFinalPath[i].nodeType !== 'end') {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+        joinedFinalPath[i].setNodeType('final-path');
+      }
     }
   }
 

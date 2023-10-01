@@ -1,23 +1,19 @@
-export default async function binaryTree(grid, delay) {
+export default async function binaryTree(gridObj, delay) {
+  // fill grid with barriers
+  gridObj.fillGrid();
+
+  const grid = gridObj.grid;
+  const rows = grid.length;
+  const cols = grid[0].length;
+
   function connect(node1, node2, barrierBetween) {
     node1.setNodeType('empty');
     node2.setNodeType('empty');
     barrierBetween.setNodeType('empty');
   }
 
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      grid[row][col].setNodeType('barrier');
-    }
-  }
-
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      if (row % 2 === 0 || col % 2 === 0) continue;
-      if (delay > 0) {
-        await new Promise((resolve) => setTimeout(resolve, delay));
-      }
-
+  for (let row = 1; row < rows; row += 2) {
+    for (let col = 1; col < cols; col += 2) {
       const currentSquare = grid[row][col];
       let northNeighbor;
       let westNeighbor;
@@ -35,6 +31,9 @@ export default async function binaryTree(grid, delay) {
       }
 
       if (northNeighbor && westNeighbor) {
+        if (delay > 0) {
+          await new Promise((resolve) => setTimeout(resolve, delay));
+        }
         // if both paths are available
         const random = Math.floor(Math.random() * 2);
         if (random === 0) {
