@@ -60,9 +60,9 @@ async function runAlgorithm(pathFindingAlgorithm) {
   const endNode = gridObj.end.node;
 
   const algorithm = AlgorithmFactory.createAlgorithm(pathFindingAlgorithm);
-  const done = await algorithm(startNode, endNode, pathfindingSpeed);
+  await algorithm(startNode, endNode, pathfindingSpeed);
 
-  if (done) running[0] = false;
+  running[0] = false;
 }
 
 // run maze generation algorithm
@@ -72,9 +72,9 @@ async function generateMaze(mazeGenerationAlgorithm) {
   gridObj.resetGrid();
 
   const maze = MazeFactory.createMaze(mazeGenerationAlgorithm);
-  const done = await maze(gridObj, mazeSpeed);
+  await maze(gridObj, mazeSpeed);
 
-  if (done) running[0] = false;
+  running[0] = false;
 }
 
 // update how fast maze generates

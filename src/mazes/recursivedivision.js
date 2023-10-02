@@ -31,7 +31,7 @@ export default async function recursiveDivision(gridObj, delay) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (row === 0 || row === rows - 1 || col === 0 || col === cols - 1) {
-        grid[row][col].setNodeType('barrier', delay);
+        grid[row][col].setNodeType('barrier', 0);
       }
     }
   }
