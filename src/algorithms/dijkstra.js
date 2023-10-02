@@ -5,9 +5,10 @@ export default async function runDijkstra(startNode, endNode, delay) {
 
   async function displayFinalPath(path) {
     for (let i = path.length - 1; i >= 0; i--) {
-      if (path[i].nodeType === 'start' || path[i].nodeType === 'end') continue;
-      await new Promise((resolve) => setTimeout(resolve, 30));
-      path[i].setNodeType('final-path');
+      if (path[i].nodeType !== 'start' && path[i].nodeType !== 'end') {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+        path[i].setNodeType('final-path', delay);
+      }
     }
   }
 
@@ -15,10 +16,12 @@ export default async function runDijkstra(startNode, endNode, delay) {
   openListQueue.push(startNode);
 
   async function algorithm() {
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    if (delay > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
     const currentNode = openListQueue.shift();
     if (currentNode.nodeType !== 'start' && currentNode.nodeType !== 'end') {
-      currentNode.setNodeType('closed-list');
+      currentNode.setNodeType('closed-list', delay);
     }
 
     if (currentNode === endNode) {
@@ -28,7 +31,7 @@ export default async function runDijkstra(startNode, endNode, delay) {
         finalPath.push(temp.previousNode);
         temp = temp.previousNode;
       }
-      displayFinalPath(finalPath);
+      await displayFinalPath(finalPath);
       return true;
     }
 
@@ -41,19 +44,18 @@ export default async function runDijkstra(startNode, endNode, delay) {
           currNeighbor.previousNode = currentNode;
           openListQueue.push(currNeighbor);
           if (currNeighbor.nodeType !== 'start' && currNeighbor.nodeType !== 'end') {
-            currNeighbor.setNodeType('open-list');
+            currNeighbor.setNodeType('open-list', delay);
           }
         }
       }
     }
 
     if (openListQueue.length > 0) {
-      algorithm();
+      return algorithm();
     }
 
     return false;
   }
 
-  const done = algorithm();
-  return done;
+  return algorithm();
 }

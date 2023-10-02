@@ -46,9 +46,9 @@ export default async function generatePrims(gridObj, delay) {
   }
 
   function connect(node1, node2, wallBetween) {
-    node1.setNodeType('empty');
-    node2.setNodeType('empty');
-    wallBetween.setNodeType('empty');
+    node1.setNodeType('empty', delay);
+    node2.setNodeType('empty', delay);
+    wallBetween.setNodeType('empty', delay);
   }
 
   // choose a random point on the grid to start with
@@ -58,7 +58,7 @@ export default async function generatePrims(gridObj, delay) {
     const randomCol = Math.floor(Math.random() * (cols - 4)) + 2;
     if (randomRow % 2 !== 0 && randomCol % 2 !== 0) {
       randomFirstNode = grid[randomRow][randomCol];
-      randomFirstNode.setNodeType('empty');
+      randomFirstNode.setNodeType('empty', delay);
       visited.add(randomFirstNode);
     }
   }
@@ -71,9 +71,6 @@ export default async function generatePrims(gridObj, delay) {
   });
 
   while (frontier.length > 0) {
-    if (delay > 0) {
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
     const randomIndex = Math.floor(Math.random() * frontier.length);
     const randomFrontierNode = frontier[randomIndex];
     const frontierNeighbors = getNeighbors(randomFrontierNode);
@@ -90,6 +87,9 @@ export default async function generatePrims(gridObj, delay) {
     const randomAdjacentIn = adjacentIns[Math.floor(Math.random() * adjacentIns.length)];
     for (let i = 0; i < adjacentIns.length; i++) {
       if (adjacentIns[i] === randomAdjacentIn) {
+        if (delay > 0) {
+          await new Promise((resolve) => setTimeout(resolve, delay));
+        }
         const wallBetween = getWallBetween(randomFrontierNode, randomAdjacentIn);
         const indexToSplice = frontier.indexOf(randomFrontierNode);
         connect(randomFrontierNode, randomAdjacentIn, wallBetween);

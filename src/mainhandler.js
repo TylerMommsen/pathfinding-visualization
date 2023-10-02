@@ -5,7 +5,7 @@ import MazeFactory from './mazefactory';
 let gridObj = null;
 let selectedAlgorithm = null;
 let selectedMaze = null;
-const running = [false]; // check if algorithm is currently running
+const running = [false]; // check if path or maze algorithm is currently running
 let currMazeSpeedSetting = 'Normal';
 let currPathfindingSpeedSetting = 'Normal';
 let mazeSpeed = 10;
@@ -38,6 +38,7 @@ const mazeGenSpeeds = {
 // initially loaded grid
 function loadGrid() {
   gridObj = new Grid(gridSizes.medium.rows, gridSizes.medium.cols, gridSize, running);
+  gridObj.setAllNodeNeighbors();
 }
 
 // run pathfinding algorithm
@@ -45,7 +46,6 @@ async function runAlgorithm(pathFindingAlgorithm) {
   if (running[0] || !pathFindingAlgorithm || !gridObj.start.node || !gridObj.end.node) return;
   running[0] = true;
 
-  gridObj.setAllNodeNeighbors();
   gridObj.resetPath();
 
   if (pathFindingAlgorithm === 'Dijkstra') {
@@ -79,20 +79,15 @@ async function generateMaze(mazeGenerationAlgorithm) {
 
 // update how fast maze generates
 function updateMazeDelay(speed) {
+  const newSpeed = speed.toLowerCase();
   if (gridSize === 'small') {
-    if (speed === 'Slow') mazeSpeed = mazeGenSpeeds.slow.small;
-    if (speed === 'Normal') mazeSpeed = mazeGenSpeeds.normal.small;
-    if (speed === 'Fast') mazeSpeed = mazeGenSpeeds.fast.small;
+    mazeSpeed = mazeGenSpeeds[newSpeed].small;
   }
   if (gridSize === 'medium') {
-    if (speed === 'Slow') mazeSpeed = mazeGenSpeeds.slow.medium;
-    if (speed === 'Normal') mazeSpeed = mazeGenSpeeds.normal.medium;
-    if (speed === 'Fast') mazeSpeed = mazeGenSpeeds.fast.medium;
+    mazeSpeed = mazeGenSpeeds[newSpeed].medium;
   }
   if (gridSize === 'large') {
-    if (speed === 'Slow') mazeSpeed = mazeGenSpeeds.slow.large;
-    if (speed === 'Normal') mazeSpeed = mazeGenSpeeds.normal.large;
-    if (speed === 'Fast') mazeSpeed = mazeGenSpeeds.fast.large;
+    mazeSpeed = mazeGenSpeeds[newSpeed].large;
   }
 
   if (speed === 'Instant') mazeSpeed = mazeGenSpeeds.instant;
@@ -100,20 +95,15 @@ function updateMazeDelay(speed) {
 
 // update how fast path algorithm explores nodes
 function updatePathfindingDelay(speed) {
+  const newSpeed = speed.toLowerCase();
   if (gridSize === 'small') {
-    if (speed === 'Slow') pathfindingSpeed = pathfindingSpeeds.slow.small;
-    if (speed === 'Normal') pathfindingSpeed = pathfindingSpeeds.normal.small;
-    if (speed === 'Fast') pathfindingSpeed = pathfindingSpeeds.fast.small;
+    pathfindingSpeed = pathfindingSpeeds[newSpeed].small;
   }
   if (gridSize === 'medium') {
-    if (speed === 'Slow') pathfindingSpeed = pathfindingSpeeds.slow.medium;
-    if (speed === 'Normal') pathfindingSpeed = pathfindingSpeeds.normal.medium;
-    if (speed === 'Fast') pathfindingSpeed = pathfindingSpeeds.fast.medium;
+    pathfindingSpeed = pathfindingSpeeds[newSpeed].medium;
   }
   if (gridSize === 'large') {
-    if (speed === 'Slow') pathfindingSpeed = pathfindingSpeeds.slow.large;
-    if (speed === 'Normal') pathfindingSpeed = pathfindingSpeeds.normal.large;
-    if (speed === 'Fast') pathfindingSpeed = pathfindingSpeeds.fast.large;
+    pathfindingSpeed = pathfindingSpeeds[newSpeed].large;
   }
 
   if (speed === 'Instant') pathfindingSpeed = pathfindingSpeeds.instant;
@@ -122,15 +112,8 @@ function updatePathfindingDelay(speed) {
 function updateGridSize(size) {
   const newSize = size.toLowerCase();
   gridSize = newSize;
-  if (size === 'Small') {
-    gridObj.updateGridSize(gridSizes.small.rows, gridSizes.small.cols, gridSize);
-  }
-  if (size === 'Medium') {
-    gridObj.updateGridSize(gridSizes.medium.rows, gridSizes.medium.cols, gridSize);
-  }
-  if (size === 'Large') {
-    gridObj.updateGridSize(gridSizes.large.rows, gridSizes.large.cols, gridSize);
-  }
+
+  gridObj.updateGridSize(gridSizes[newSize].rows, gridSizes[newSize].cols, newSize);
 
   gridObj.resetGrid();
 
@@ -308,7 +291,6 @@ function addListenersToBtns() {
   });
 
   eraseModeBtn.addEventListener('click', (e) => {
-    if (running[0]) return;
     if (e.target.textContent === 'Erase: Off') {
       e.target.textContent = 'Erase: On';
     } else if (e.target.textContent === 'Erase: On') {

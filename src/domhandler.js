@@ -1,12 +1,14 @@
 // update square display
-function displayNode(node, currNodeType, newNodeType, grid) {
+function displayNode(node, currNodeType, newNodeType, grid, delay) {
   const domSquare = grid.findDomSquare(node.row - 1, node.col - 1);
 
-  domSquare.classList.remove('animated');
-  // eslint-disable-next-line no-unused-expressions
-  domSquare.offsetWidth;
-  if (newNodeType !== 'closed-list') {
-    domSquare.classList.add('animated');
+  if (delay !== 0) {
+    domSquare.classList.remove('animated');
+    // eslint-disable-next-line no-unused-expressions
+    domSquare.offsetWidth;
+    if (newNodeType !== 'closed-list') {
+      domSquare.classList.add('animated');
+    }
   }
 
   domSquare.classList.toggle(currNodeType, false);

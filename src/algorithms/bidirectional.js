@@ -5,64 +5,43 @@ export default async function runBidirectional(startNode, endNode, delay) {
   const queueForwards = [];
   const queueBackwards = [];
 
-  async function dispayFinalPath(meetingPoint) {
-    const finalPathForward = [];
-    const finalPathBackward = [];
-    const joinedFinalPath = [];
+  async function displayFinalPath(backwardNode, forwardNode) {
+    let pathForward = [];
+    const pathBackward = [];
 
-    let node = null;
-    // get path from start to meeting point
-    if (visitedForwards.has(meetingPoint.neighbors[0])) {
-      node = meetingPoint.neighbors[0]; // right
-    } else if (visitedForwards.has(meetingPoint.neighbors[1])) {
-      node = meetingPoint.neighbors[1]; // left
-    } else if (visitedForwards.has(meetingPoint.neighbors[2])) {
-      node = meetingPoint.neighbors[2]; // down
-    } else if (visitedForwards.has(meetingPoint.neighbors[3])) {
-      node = meetingPoint.neighbors[3]; // up
-    }
-    finalPathForward.push(node);
+    let node = backwardNode;
+    pathBackward.push(node);
     while (node.previousNode) {
-      finalPathForward.push(node.previousNode);
+      pathBackward.push(node.previousNode);
       node = node.previousNode;
     }
 
-    // get path from meeting point to end
-    if (visitedBackwards.has(meetingPoint.neighbors[0])) {
-      node = meetingPoint.neighbors[0]; // right
-    } else if (visitedBackwards.has(meetingPoint.neighbors[1])) {
-      node = meetingPoint.neighbors[1]; // left
-    } else if (visitedBackwards.has(meetingPoint.neighbors[2])) {
-      node = meetingPoint.neighbors[2]; // down
-    } else if (visitedBackwards.has(meetingPoint.neighbors[3])) {
-      node = meetingPoint.neighbors[3]; // up
-    }
-    finalPathBackward.push(node);
-    while (node.previousNode) {
-      finalPathBackward.push(node.previousNode);
-      node = node.previousNode;
+    let node2 = forwardNode;
+    pathForward.push(node2);
+    while (node2.previousNode) {
+      pathForward.push(node2.previousNode);
+      node2 = node2.previousNode;
     }
 
-    for (let i = finalPathForward.length - 1; i >= 0; i--) {
-      joinedFinalPath.push(finalPathForward[i]);
+    const temp = [];
+    for (let i = pathForward.length - 1; i >= 0; i--) {
+      temp.push(pathForward[i]);
     }
-    joinedFinalPath.push(meetingPoint);
-    for (let i = 0; i < finalPathBackward.length; i++) {
-      joinedFinalPath.push(finalPathBackward[i]);
-    }
+    pathForward = temp;
 
-    for (let i = 0; i < joinedFinalPath.length; i++) {
-      if (joinedFinalPath[i].nodeType !== 'start' && joinedFinalPath[i].nodeType !== 'end') {
+    const finalPath = pathForward.concat(pathBackward);
+
+    for (let i = 0; i < finalPath.length; i++) {
+      if (finalPath[i].nodeType !== 'start' && finalPath[i].nodeType !== 'end') {
         await new Promise((resolve) => setTimeout(resolve, 30));
-        joinedFinalPath[i].setNodeType('final-path');
+        finalPath[i].setNodeType('final-path', delay);
       }
     }
   }
 
   queueForwards.push(startNode);
-  visitedForwards.add(startNode);
-
   queueBackwards.push(endNode);
+  visitedForwards.add(startNode);
   visitedBackwards.add(endNode);
 
   while (queueForwards.length > 0 && queueBackwards.length > 0) {
@@ -72,50 +51,53 @@ export default async function runBidirectional(startNode, endNode, delay) {
 
     // forwards
     const currNodeForward = queueForwards.shift();
+
     if (currNodeForward !== startNode) {
-      currNodeForward.setNodeType('closed-list');
+      currNodeForward.setNodeType('closed-list', delay);
     }
     const neighborsForward = currNodeForward.neighbors;
     let currNeighborForward = null;
 
     for (let i = 0; i < neighborsForward.length; i++) {
       currNeighborForward = neighborsForward[i];
-      if (!visitedForwards.has(currNeighborForward) && currNeighborForward.nodeType !== 'barrier') {
-        queueForwards.push(currNeighborForward);
-        currNeighborForward.previousNode = currNodeForward;
-        currNeighborForward.setNodeType('open-list');
-        visitedForwards.add(currNeighborForward);
+      if (visitedBackwards.has(currNeighborForward)) {
+        displayFinalPath(currNeighborForward, currNodeForward);
+        return true;
       }
 
-      if (visitedBackwards.has(currNeighborForward)) {
-        dispayFinalPath(currNeighborForward);
-        return true;
+      if (!visitedForwards.has(currNeighborForward) && !queueForwards.includes(currNeighborForward) && currNeighborForward.nodeType !== 'barrier') {
+        queueForwards.push(currNeighborForward);
+        currNeighborForward.previousNode = currNodeForward;
+        currNeighborForward.setNodeType('open-list', delay);
+        visitedForwards.add(currNeighborForward);
       }
     }
 
     // backwards
     const currNodeBackward = queueBackwards.shift();
+
     if (currNodeBackward !== endNode) {
-      currNodeBackward.setNodeType('closed-list');
+      currNodeBackward.setNodeType('closed-list', delay);
     }
     const neighborsBackward = currNodeBackward.neighbors;
     let currNeighborBackward = null;
 
     for (let i = 0; i < neighborsBackward.length; i++) {
       currNeighborBackward = neighborsBackward[i];
+      if (visitedForwards.has(currNeighborBackward)) {
+        displayFinalPath(currNodeBackward, currNeighborBackward);
+        return true;
+      }
+
       if (
-        !visitedBackwards.has(currNeighborBackward) &&
-        currNeighborBackward.nodeType !== 'barrier'
+        !visitedBackwards.has(currNeighborBackward)
+        && !queueBackwards.includes(currNeighborBackward)
+        && currNeighborBackward.nodeType !== 'barrier'
       ) {
         queueBackwards.push(currNeighborBackward);
         currNeighborBackward.previousNode = currNodeBackward;
-        currNeighborBackward.setNodeType('open-list');
+        currNeighborBackward.setNodeType('open-list', delay);
         visitedBackwards.add(currNeighborBackward);
-      }
-
-      if (visitedForwards.has(currNeighborBackward)) {
-        dispayFinalPath(currNeighborBackward);
-        return true;
       }
     }
   }

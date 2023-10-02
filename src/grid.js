@@ -124,6 +124,7 @@ export default class Grid {
   setAllNodeNeighbors() {
     for (let row = 0; row < this.grid.length; row++) {
       for (let col = 0; col < this.grid[row].length; col++) {
+        this.grid[row][col].neighbors = [];
         this.grid[row][col].setNeighbors(this.grid);
       }
     }
@@ -157,7 +158,8 @@ export default class Grid {
         const currNode = this.grid[row][col];
         const currType = currNode.nodeType;
         if (currType === 'open-list' || currType === 'closed-list' || currType === 'final-path') {
-          currNode.setNodeType('empty');
+          currNode.setNodeType('empty', 0);
+          currNode.previousNode = null;
         }
       }
     }

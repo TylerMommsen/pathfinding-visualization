@@ -15,7 +15,7 @@ export default function runAstar(startNode, endNode, delay) {
     for (let i = path.length - 1; i >= 0; i--) {
       if (path[i].nodeType !== 'start' && path[i].nodeType !== 'end') {
         await new Promise((resolve) => setTimeout(resolve, 30));
-        path[i].setNodeType('final-path');
+        path[i].setNodeType('final-path', delay);
       }
     }
   }
@@ -49,7 +49,7 @@ export default function runAstar(startNode, endNode, delay) {
 
     closedList.push(currentNode);
     if (currentNode.nodeType !== 'start' && currentNode.nodeType !== 'end') {
-      currentNode.setNodeType('closed-list');
+      currentNode.setNodeType('closed-list', delay);
     }
     removeFromArr(currentNode);
 
@@ -66,7 +66,7 @@ export default function runAstar(startNode, endNode, delay) {
           currNeighbor.g = tempG;
           openList.push(currNeighbor);
           if (currNeighbor.nodeType !== 'start' && currNeighbor.nodeType !== 'end') {
-            currNeighbor.setNodeType('open-list');
+            currNeighbor.setNodeType('open-list', delay);
           }
         }
 

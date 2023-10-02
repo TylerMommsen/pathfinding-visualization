@@ -8,7 +8,7 @@ export default async function sidewinder(gridObj, delay) {
   // leave first row empty
   for (let col = 0; col < cols; col++) {
     if (col !== 0 && col !== cols - 1) {
-      grid[1][col].setNodeType('empty');
+      grid[1][col].setNodeType('empty', delay);
     }
   }
 
@@ -16,20 +16,20 @@ export default async function sidewinder(gridObj, delay) {
     let run = [];
     for (let col = 1; col < cols; col += 2) {
       const currentNode = grid[row][col];
-      currentNode.setNodeType('empty');
+      currentNode.setNodeType('empty', delay);
       run.push(currentNode);
 
       if (Math.random() < 0.6 && col !== cols - 2) {
         if (delay > 0) {
           await new Promise((resolve) => setTimeout(resolve, delay));
         }
-        currentNode.neighbors[0].setNodeType('empty');
+        currentNode.neighbors[0].setNodeType('empty', delay);
       } else if (run.length > 0 && row > 1) {
         const randomIndex = Math.floor(Math.random() * run.length);
         if (delay > 0) {
           await new Promise((resolve) => setTimeout(resolve, delay));
         }
-        run[randomIndex].neighbors[3].setNodeType('empty');
+        run[randomIndex].neighbors[3].setNodeType('empty', delay);
         run = [];
       }
     }

@@ -7,9 +7,9 @@ export default async function binaryTree(gridObj, delay) {
   const cols = grid[0].length;
 
   function connect(node1, node2, barrierBetween) {
-    node1.setNodeType('empty');
-    node2.setNodeType('empty');
-    barrierBetween.setNodeType('empty');
+    node1.setNodeType('empty', delay);
+    node2.setNodeType('empty', delay);
+    barrierBetween.setNodeType('empty', delay);
   }
 
   for (let row = 1; row < rows; row += 2) {

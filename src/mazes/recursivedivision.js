@@ -31,7 +31,7 @@ export default async function recursiveDivision(gridObj, delay) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (row === 0 || row === rows - 1 || col === 0 || col === cols - 1) {
-        grid[row][col].setNodeType('barrier');
+        grid[row][col].setNodeType('barrier', delay);
       }
     }
   }
@@ -58,7 +58,7 @@ export default async function recursiveDivision(gridObj, delay) {
           if (delay > 0) {
             await new Promise((resolve) => setTimeout(resolve, delay));
           }
-          grid[wallRow][col].setNodeType('barrier');
+          grid[wallRow][col].setNodeType('barrier', delay);
         }
       }
     } else if (orientation === 'vertical') {
@@ -68,7 +68,7 @@ export default async function recursiveDivision(gridObj, delay) {
           if (delay > 0) {
             await new Promise((resolve) => setTimeout(resolve, delay));
           }
-          grid[row][wallCol].setNodeType('barrier');
+          grid[row][wallCol].setNodeType('barrier', delay);
         }
       }
     }

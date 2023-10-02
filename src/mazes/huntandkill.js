@@ -86,7 +86,7 @@ export default async function generateHuntAndKill(gridObj, delay) {
       const randomCol = Math.floor(Math.random() * (cols - 4)) + 2;
       if (randomRow % 2 !== 0 && randomCol % 2 !== 0) {
         randomFirstNode = grid[randomRow][randomCol];
-        randomFirstNode.setNodeType('empty');
+        randomFirstNode.setNodeType('empty', delay);
         randomNodeFound = true;
       }
     }
@@ -100,30 +100,30 @@ export default async function generateHuntAndKill(gridObj, delay) {
     if (row > 1) {
       if (grid[row - 2][col] === nextNode) {
         const wallBetween = grid[row - 1][col];
-        wallBetween.setNodeType('empty');
+        wallBetween.setNodeType('empty', delay);
       }
     }
     if (row < rows - 2) {
       if (grid[row + 2][col] === nextNode) {
         const wallBetween = grid[row + 1][col];
-        wallBetween.setNodeType('empty');
+        wallBetween.setNodeType('empty', delay);
       }
     }
     if (col > 1) {
       if (grid[row][col - 2] === nextNode) {
         const wallBetween = grid[row][col - 1];
-        wallBetween.setNodeType('empty');
+        wallBetween.setNodeType('empty', delay);
       }
     }
     if (col < cols - 2) {
       if (grid[row][col + 2] === nextNode) {
         const wallBetween = grid[row][col + 1];
-        wallBetween.setNodeType('empty');
+        wallBetween.setNodeType('empty', delay);
       }
     }
 
-    currNode.setNodeType('empty');
-    nextNode.setNodeType('empty');
+    currNode.setNodeType('empty', delay);
+    nextNode.setNodeType('empty', delay);
   }
 
   async function algorithm() {

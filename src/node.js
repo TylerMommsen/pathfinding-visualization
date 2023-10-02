@@ -33,8 +33,8 @@ export default class Node {
   }
 
   // change node type e.g barrier, start, end, open-list, closed-list
-  setNodeType(newNodeType) {
-    DomHandler.displayNode(this, this.nodeType, newNodeType, this.grid);
+  setNodeType(newNodeType, delay) {
+    DomHandler.displayNode(this, this.nodeType, newNodeType, this.grid, delay);
     this.nodeType = newNodeType;
   }
 

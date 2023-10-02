@@ -9,7 +9,7 @@ export default async function randomMap(gridObj, delay) {
         if (delay > 0) {
           await new Promise((resolve) => setTimeout(resolve, delay));
         }
-        grid[row][col].setNodeType('barrier');
+        grid[row][col].setNodeType('barrier', delay);
       }
     }
   }
