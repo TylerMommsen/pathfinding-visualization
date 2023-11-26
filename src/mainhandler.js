@@ -230,6 +230,10 @@ function addListenersToBtns() {
   helpBtn.addEventListener('click', () => {
     darkOverlay.style.display = 'block';
     helpBoard.style.display = 'flex';
+
+    pages[currentPage].removeAttribute('id');
+    currentPage = 0;
+    pages[currentPage].setAttribute('id', 'show-page');
   });
 
   selectAlgoListItems.forEach((item) => {
