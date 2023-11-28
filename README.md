@@ -4,6 +4,7 @@ Hey! This is a visualization tool designed to demonstrate the inner workings of 
 ## Demo
 
 https://tylermommsen.github.io/pathfinding-visualization/  
+
 ![MazeGenGif](https://github.com/TylerMommsen/pathfinding-visualization/assets/65496518/a7ecf7e4-35b1-4c54-aeb3-4f15579dfd41)
 ![PathfindingGif](https://github.com/TylerMommsen/pathfinding-visualization/assets/65496518/9fcf2f03-e588-4b95-8462-48842d769c94)
 
