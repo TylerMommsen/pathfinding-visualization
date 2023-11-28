@@ -3,8 +3,9 @@
 Hey! This is a visualization tool designed to demonstrate the inner workings of various pathfinding algorithms as they navigate from point A to point B. Additionally, it offers an engaging look at different maze generation algorithms and how they craft intricate mazes. This interactive tool is crafted using HTML, SCSS, and JavaScript. Feel free to explore and enjoy the experience!
 ## Demo
 
-https://tylermommsen.github.io/pathfinding-visualization/
-![GithubPic1](https://github.com/TylerMommsen/pathfinding-visualization/assets/65496518/0f487fd9-f747-42c5-91d4-8c3abd2dbad9)
+https://tylermommsen.github.io/pathfinding-visualization/  
+![MazeGenGif](https://github.com/TylerMommsen/pathfinding-visualization/assets/65496518/a7ecf7e4-35b1-4c54-aeb3-4f15579dfd41)
+![PathfindingGif](https://github.com/TylerMommsen/pathfinding-visualization/assets/65496518/9fcf2f03-e588-4b95-8462-48842d769c94)
 
 ## Pathfinding Algorithms
 
