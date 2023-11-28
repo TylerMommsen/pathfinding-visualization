@@ -4,7 +4,7 @@ Hey! This is a visualization tool designed to demonstrate the inner workings of 
 ## Demo
 
 https://tylermommsen.github.io/pathfinding-visualization/
-
+![GithubPic1](https://github.com/TylerMommsen/pathfinding-visualization/assets/65496518/0f487fd9-f747-42c5-91d4-8c3abd2dbad9)
 
 ## Pathfinding Algorithms
 
